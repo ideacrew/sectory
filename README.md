@@ -1,5 +1,11 @@
 # Sectory
 
+**Sec**urity Inven**tory** is a tool for building inventories of software and analyzing vulnerabilities.
+
+It allows you to upload sofware bills of materials (SBOMs) and track the vulnerabilties as well as the mitigations you attest against them - reporting this information in various formats.
+
+## Running
+
 To start your Phoenix server:
 
   * Run `mix setup` to install and setup dependencies
