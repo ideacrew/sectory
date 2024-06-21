@@ -41,7 +41,7 @@ export class VulnerabilitiesListComponent extends Component<PropsType, any, any>
       if (vulns.length > 0) {
         const sortedVulns = this.sortVulns(vulns);
         return sortedVulns.map(v => {
-          return <VulnerabilityComponent vulnerability={v} dataLoader={this.props.dataLoader} key={v["bom-ref"] + "vuln-row"}></VulnerabilityComponent>
+          return <VulnerabilityComponent vulnerability={v} dataLoader={this.props.dataLoader} key={v["bom-ref"] + v["id"] + "vuln-row"}></VulnerabilityComponent>
         });
       }
     }
