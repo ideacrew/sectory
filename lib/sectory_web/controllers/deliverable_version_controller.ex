@@ -33,7 +33,8 @@ defmodule SectoryWeb.DeliverableVersionController do
         %{
           id: vs.id,
           name: vs.name,
-          version_sbom_url: ~p"/version_sboms/#{vs.id}"
+          version_sbom_url: ~p"/version_sboms/#{vs.id}",
+          analyzed_version_sbom_url: ~p"/version_sboms/#{vs.id}/analyzed"
         }
       end)
     }

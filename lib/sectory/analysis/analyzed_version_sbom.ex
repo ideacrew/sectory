@@ -68,7 +68,9 @@ defmodule Sectory.Analysis.AnalyzedVersionSbom do
       state: vas.vulnerability_analysis.state,
       justification: vas.vulnerability_analysis.justification,
       response: vas.vulnerability_analysis.response,
-      detail: vas.vulnerability_analysis.detail
+      detail: vas.vulnerability_analysis.detail,
+      firstIssued: vas.inserted_at,
+      lastUpdated: vas.updated_at
     }
   end
 

@@ -78,7 +78,7 @@ export type VulnerabilityAnalysis = {
   response?: cdx.Enums.Vulnerability.AnalysisResponse;
   detail?: string;
   firstIssued?: string;
-  lastUpdated: string;
+  lastUpdated?: string;
 };
 
 export type Vulnerability = {
