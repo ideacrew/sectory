@@ -21,7 +21,9 @@ defmodule SectoryWeb.VersionSbomController do
 
   defp encode_record(record) do
     %{
-
+      sbom_content: %{
+        data: record.sbom_content.data
+      }
     }
   end
 end

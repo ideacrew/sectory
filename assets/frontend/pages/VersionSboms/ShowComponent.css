@@ -1,0 +1,154 @@
+.topMenuItems li {
+  display: inline;
+  padding-right: 2em;
+}
+
+.topMenuItems li.unselected {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.contentArea {
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  padding-bottom: 1.5em;
+}
+
+.shown-section {
+  display: block;
+}
+
+.hidden-section {
+  display: none;
+}
+
+.component-list-table {
+  border-collapse: collapse;
+}
+
+.component-list-table th {
+  border-collapse: collapse;
+}
+
+.component-main-row td {
+  border-collapse: collapse;
+}
+
+.component-detail-row td {
+  border-collapse: collapse;
+}
+
+.table-detail-toggle {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.component-list-table th {
+  text-align: left;
+}
+
+tr.component-main-row {
+  border: 1px solid black;
+}
+
+tr.component-detail-row {
+  border: 1px solid black;
+}
+
+.component-detail-hidden {
+  display: none;
+}
+
+.component-detail-shown {
+  display: table-row;
+}
+
+.vuln-detail-hidden {
+  display: none;
+  border: 1px solid black;
+}
+
+.vuln-detail-shown {
+  display: table-row;
+  border: 1px solid black;
+}
+
+.vuln-row-details-content {
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-bottom: 1em;
+}
+
+.vuln-list-table {
+  border-collapse: collapse;
+}
+
+tr.vuln-main-row {
+  border: 1px solid black;
+}
+
+.vuln-main-row td {
+  border-collapse: collapse;
+}
+
+.vuln-row-details-detail {
+  white-space: pre-wrap;
+}
+
+td {
+  padding: 10px;
+}
+
+.vuln-component-kind-summary {
+  display: inline-block;
+  margin-right: 2em;
+}
+
+.vuln-component-count-summary {
+  display: block;
+}
+
+.vuln-severity-box {
+  display: inline-block;
+  margin: 1em;
+  padding: 1em;
+  color: white;
+  width: 5em;
+}
+
+.vuln-severity-box span {
+  display: block;
+  text-align: center;
+}
+
+.vuln-severity-box span.count {
+  font-size: 200%;
+}
+
+.vuln-severity-box-critical {
+  background-color: #d9534f;
+}
+
+.vuln-severity-box-high {
+  background-color: #ff7200;
+}
+
+.vuln-severity-box-medium {
+  background-color: #ffba00;
+}
+
+.vuln-severity-box-low {
+  background-color: #5bc0de;
+}
+
+.vuln-severity-box-info {
+  background-color: #5cb85c;
+}
+
+.vuln-severity-box-unknown {
+  background-color: #777;
+}
+
+.component-filtered {
+  display: none;
+}
