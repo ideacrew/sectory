@@ -1,33 +1,18 @@
 import { Component, ReactNode, Fragment } from "react";
-import { CycloneDataLoader } from "../data/cyclone_data_loader";
+import { CycloneDataLoader } from "./cyclone_data_loader";
 import { VulnerabilityComponent } from "./Vulnerability.component"
 import * as CycloneModel from "../cyclonedx/models";
-import * as cdx from "@cyclonedx/cyclonedx-library";
 import { VulnerabilitiesSummaryComponent } from "./VulnerabilitiesSummary.component";
-import React from "react";
+import React from 'react';
 
 type PropsType = {
   dataLoader: CycloneDataLoader;
 };
 
 export class VulnerabilitiesListComponent extends Component<PropsType, any, any> {
-
-  formatSeverity(vuln: CycloneModel.Vulnerability) {
-    if (vuln.ratings) {
-      const ratings = vuln.ratings;
-      if (ratings.length > 0) {
-        let sortedRatings = ratings.sort((a, b) => {
-          return CycloneModel.severitySort(a.severity) - CycloneModel.severitySort(b.severity);
-        });
-        return sortedRatings[0].severity;
-      }
-    }
-    return cdx.Enums.Vulnerability.Severity.Unknown;
-  }
-
   sortVulns(vulns: Array<CycloneModel.Vulnerability>) {
     return vulns.sort((a, b) => {
-      return CycloneModel.severitySort(this.formatSeverity(b)) - CycloneModel.severitySort(this.formatSeverity(a));
+      return CycloneModel.severitySort(CycloneModel.formatSeverity(b)) - CycloneModel.severitySort(CycloneModel.formatSeverity(a));
     });
   }
 

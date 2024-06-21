@@ -3,9 +3,9 @@ import { MenuComponent } from '../../components/Menu.component'
 import { MainSummaryComponent } from "../../components/MainSummary.component"
 import { ViewSelectionComponent } from "../../components/ViewSelection.component"
 import { useState } from "react";
-import { ViewSelection } from '../../view_models/view_state';
+import { ViewSelection } from '../../components/view_state';
 import React from 'react'
-import { CycloneDataLoader } from '../../data/cyclone_data_loader';
+import { CycloneDataLoader } from '../../components/cyclone_data_loader';
 import "./ShowComponent.css";
 
 export default function ShowComponent({ version_sbom }) {

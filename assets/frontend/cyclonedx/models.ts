@@ -60,6 +60,15 @@ export type ToolSet = {
   components?: Array<Tool>;
 }
 
+export type VulnerabilityAnalysis = {
+  state?: cdx.Enums.Vulnerability.AnalysisState;
+  justification?: cdx.Enums.Vulnerability.AnalysisJustification;
+  response?: cdx.Enums.Vulnerability.AnalysisResponse;
+  detail?: string;
+  firstIssued?: string;
+  lastUpdated: string;
+};
+
 export type Vulnerability = {
   id: string;
   "bom-ref": string;
@@ -70,6 +79,7 @@ export type Vulnerability = {
   affects?: Array<AffectsRef>;
   advisories?: Array<Advisory>;
   tools?: ToolSet;
+  analysis?: VulnerabilityAnalysis;
 };
 
 export type ExternalRef = {
@@ -113,4 +123,31 @@ export function getComponentKind(comp: Component) {
     }
   }
   return "other";
+}
+
+const noSeverityAnalysisStates = [
+  cdx.Enums.Vulnerability.AnalysisState.FalsePositive,
+  cdx.Enums.Vulnerability.AnalysisState.NotAffected,
+  cdx.Enums.Vulnerability.AnalysisState.Resolved,
+  cdx.Enums.Vulnerability.AnalysisState.ResolvedWithPedigree
+];
+
+export function formatSeverity(vuln: Vulnerability) {
+  if (vuln.analysis) {
+    if (vuln.analysis.state) {
+      if (noSeverityAnalysisStates.indexOf(vuln.analysis.state) > -1) {
+        return cdx.Enums.Vulnerability.Severity.None;
+      }
+    }
+  }
+  if (vuln.ratings) {
+    const ratings = vuln.ratings;
+    if (ratings.length > 0) {
+      let sortedRatings = ratings.sort((a, b) => {
+        return severitySort(a.severity) - severitySort(b.severity);
+      });
+      return sortedRatings[0].severity;
+    }
+  }
+  return cdx.Enums.Vulnerability.Severity.Unknown;
 }

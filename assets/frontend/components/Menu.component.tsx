@@ -1,5 +1,5 @@
 import { Component, ReactNode } from "react";
-import { ViewSelection } from "../view_models/view_state";
+import { ViewSelection } from "./view_state";
 import React from "react";
 
 type PropsType = {

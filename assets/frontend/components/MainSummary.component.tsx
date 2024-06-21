@@ -1,5 +1,5 @@
 import { Component, ReactNode, Fragment } from "react";
-import { CycloneDataLoader } from "../data/cyclone_data_loader";
+import { CycloneDataLoader } from "./cyclone_data_loader";
 import * as CycloneModel from "../cyclonedx/models";
 import * as cdx from "@cyclonedx/cyclonedx-library";
 import React from "react";

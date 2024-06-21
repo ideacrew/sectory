@@ -1,7 +1,7 @@
 import { Component, ReactNode, Fragment } from "react";
-import { CycloneDataLoader } from "../data/cyclone_data_loader";
+import { CycloneDataLoader } from "./cyclone_data_loader";
 import { ComponentListComponent } from './ComponentList.component';
-import { ViewSelection } from "../view_models/view_state";
+import { ViewSelection } from "./view_state";
 import { VulnerabilitiesListComponent } from "./VulnerabilitiesList.component";
 import * as CycloneModel from "../cyclonedx/models";
 import React from "react";
