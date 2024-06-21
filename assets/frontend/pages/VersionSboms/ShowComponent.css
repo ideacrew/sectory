@@ -142,11 +142,15 @@ td {
 }
 
 .vuln-severity-box-info {
-  background-color: #5cb85c;
+  background-color: #318d31;
 }
 
 .vuln-severity-box-unknown {
   background-color: #777;
+}
+
+.vuln-severity-box-none {
+  background-color: #5cb85c;
 }
 
 .component-filtered {

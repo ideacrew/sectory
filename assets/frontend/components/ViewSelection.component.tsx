@@ -9,6 +9,7 @@ import React from "react";
 type PropsType = {
   dataLoader: CycloneDataLoader;
   viewState: ViewSelection;
+  deliverableVersion: any;
 };
 
 export class ViewSelectionComponent extends Component<PropsType, any, any> {
@@ -35,7 +36,7 @@ export class ViewSelectionComponent extends Component<PropsType, any, any> {
       <ComponentListComponent components={this.components()} />
       </div>
       <div className={this.sectionClass(ViewSelection.VULNERABLITIES)}>
-      <VulnerabilitiesListComponent dataLoader={this.props.dataLoader}/>
+      <VulnerabilitiesListComponent dataLoader={this.props.dataLoader} deliverableVersion={this.props.deliverableVersion}/>
       </div>
       </Fragment>
   }

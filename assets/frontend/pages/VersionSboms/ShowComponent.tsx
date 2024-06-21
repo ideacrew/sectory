@@ -20,7 +20,7 @@ export default function ShowComponent({ version_sbom }) {
       <MenuComponent selectedView={selectedView} viewSelector={changeView} />
       <div className="contentArea">
         <MainSummaryComponent dataLoader={dataLoader} />
-        <ViewSelectionComponent dataLoader={dataLoader} viewState={selectedView} />
+        <ViewSelectionComponent dataLoader={dataLoader} viewState={selectedView} deliverableVersion={version_sbom.deliverable_version}  />
       </div>
     </>
   )

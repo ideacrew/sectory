@@ -7,13 +7,18 @@ import * as dic from "./pages/Deliverables/IndexComponent";
 import * as dsc from "./pages/Deliverables/ShowComponent";
 import * as dvsc from "./pages/DeliverableVersions/ShowComponent";
 import * as vssc from "./pages/VersionSboms/ShowComponent";
+import * as vanc from "./pages/VulnerabilityAnalyses/NewComponent"
+import axios from "axios";
 
 const pages = {
   'Deliverables/IndexComponent': dic,
   'Deliverables/ShowComponent': dsc,
   'DeliverableVersions/ShowComponent': dvsc,
-  'VersionSboms/ShowComponent': vssc
+  'VersionSboms/ShowComponent': vssc,
+  'VulnerabilityAnalyses/NewComponent': vanc
 }
+
+axios.defaults.xsrfHeaderName = "x-csrf-token";
 
 createInertiaApp({
   resolve: (name) => {

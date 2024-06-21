@@ -18,6 +18,18 @@ const SeverityOrder = [
   cdx.Enums.Vulnerability.Severity.Critical 
 ];
 
+export const VulnerablityAnalysisStateList = [
+  cdx.Enums.Vulnerability.AnalysisState.InTriage,
+  cdx.Enums.Vulnerability.AnalysisState.Exploitable,
+  cdx.Enums.Vulnerability.AnalysisState.FalsePositive,
+  cdx.Enums.Vulnerability.AnalysisState.NotAffected,
+  cdx.Enums.Vulnerability.AnalysisState.Resolved,
+  cdx.Enums.Vulnerability.AnalysisState.ResolvedWithPedigree
+];
+
+export const VulnerablityAnalysisJustificationList = Object.values(cdx.Enums.Vulnerability.AnalysisJustification);
+export const VulnerablityAnalysisResponseList = Object.values(cdx.Enums.Vulnerability.AnalysisResponse);
+
 export function severitySort(s: cdx.Enums.Vulnerability.Severity) {
   return SeverityOrder.indexOf(s);
 }

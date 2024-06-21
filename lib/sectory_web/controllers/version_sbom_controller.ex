@@ -14,15 +14,32 @@ defmodule SectoryWeb.VersionSbomController do
     |> render_inertia(
       "VersionSboms/ShowComponent",
       %{
-        version_sbom: encode_record(record)
+        version_sbom: encode_record(record, record.sbom_content.data)
       }
     )
   end
 
-  defp encode_record(record) do
+  def analyzed(conn, %{"id" => vs_id}) do
+    {record, analysis} = Sectory.Analysis.AnalyzedVersionSbom.find_analyzed_record(vs_id)
+    conn
+    |> assign(:page_title, "Deliverable")
+    |> render_inertia(
+      "VersionSboms/ShowComponent",
+      %{
+        version_sbom: encode_record(record, analysis)
+      }
+    )
+  end
+
+  defp encode_record(record, sbom_data) do
     %{
+      id: record.id,
+      deliverable_version: %{
+        id: record.deliverable_version_id,
+        analysis_url: ~p"/vulnerability_analyses/new?suggested_deliverable_version_id=#{record.deliverable_version_id}"
+      },
       sbom_content: %{
-        data: record.sbom_content.data
+        data: sbom_data
       }
     }
   end

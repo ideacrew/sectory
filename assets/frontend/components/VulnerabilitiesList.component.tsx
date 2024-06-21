@@ -7,6 +7,7 @@ import React from 'react';
 
 type PropsType = {
   dataLoader: CycloneDataLoader;
+  deliverableVersion: any;
 };
 
 export class VulnerabilitiesListComponent extends Component<PropsType, any, any> {
@@ -26,7 +27,7 @@ export class VulnerabilitiesListComponent extends Component<PropsType, any, any>
       if (vulns.length > 0) {
         const sortedVulns = this.sortVulns(vulns);
         return sortedVulns.map(v => {
-          return <VulnerabilityComponent vulnerability={v} dataLoader={this.props.dataLoader} key={v["bom-ref"] + v["id"] + "vuln-row"}></VulnerabilityComponent>
+          return <VulnerabilityComponent deliverableVersion={this.props.deliverableVersion} vulnerability={v} dataLoader={this.props.dataLoader} key={v["bom-ref"] + v["id"] + "vuln-row"}></VulnerabilityComponent>
         });
       }
     }

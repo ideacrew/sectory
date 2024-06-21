@@ -22,6 +22,10 @@ defmodule SectoryWeb.Router do
     resources "/deliverables", DeliverableController, only: [:index, :show]
     resources "/deliverable_versions", DeliverableVersionController, only: [:show]
     resources "/version_sboms", VersionSbomController, only: [:show]
+    scope "/version_sboms" do
+      get "/:id/analyzed", VersionSbomController, :analyzed
+    end
+    resources "/vulnerability_analyses", VulnerabilityAnalysisController, only: [:new, :create]
   end
 
   # Other scopes may use custom stacks.
