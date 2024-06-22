@@ -7,6 +7,9 @@ defmodule SectoryEtl.Export do
     "deliverable_version_version",
     "deliverable_version_deliverable_name",
     "deliverable_name",
+    "state",
+    "justification",
+    "response",
     "detail"
   ]
 
@@ -25,60 +28,47 @@ defmodule SectoryEtl.Export do
         data: sc.data
       }
     sbom_stream = Sectory.Repo.stream(sbom_query)
-    {:ok, path} = Briefly.create()
-    Sectory.Repo.transaction(fn ->
-      zstream = Zstream.zip(
-        stream_sbom_query(sbom_stream, analyses_csv)
-      )
-      zstream
-        |> Stream.into(File.stream!(path))
-        |> Stream.run
+    {:ok, path} = Briefly.create(type: :directory)
+    {:ok, zip_path} = Briefly.create()
+    {:ok, file_list} = Sectory.Repo.transaction(fn ->
+      file_list_stream = stream_sbom_query(sbom_stream, analyses_csv)
+      Enum.map(file_list_stream, fn({fname, fs}) ->
+        f_path = Path.join([path, fname])
+        out_file = File.open!(f_path, [:write, :binary])
+        IO.binwrite(out_file, fs)
+        File.close(out_file)
+        to_charlist(fname)
+      end)
     end)
-    path
+    :zip.create(to_charlist(zip_path), file_list, [{:cwd, to_charlist(path)}, :verbose])
+    zip_path
   end
 
   def stream_sbom_query(sbom_stream, analyses_csv) do
-    Stream.transform(
+    sbom_stream = Stream.transform(
       sbom_stream,
-      fn() -> :starting end,
+      fn() -> [] end,
       fn ele, acc ->
-        case acc do
-          :starting ->
-            {sbom_name, sbom_filename, sbom_entry} = filename_and_content_for(ele)
-            {
-              [
-              Zstream.entry("analyses.csv", [analyses_csv]),
-              Zstream.entry(sbom_filename, [sbom_entry])
-              ],
-            {:sboms, [[sbom_name, sbom_filename]]}
-            }
-          _ ->
-            {sbom_name, sbom_filename, sbom_entry} = filename_and_content_for(ele)
-            {:sboms, previous} = acc
-            {[Zstream.entry(sbom_filename, [sbom_entry])], {:sboms, [[sbom_name, sbom_filename]|previous]}}
-        end
+          {sbom_name, sbom_filename, sbom_entry} = filename_and_content_for(ele)
+          {[{sbom_filename, sbom_entry}], [[sbom_name, sbom_filename]|acc]}
       end,
-      fn acc -> {manifest_entries_for(acc, analyses_csv), acc} end,
+      fn acc -> {manifest_entries_for(acc), acc} end,
       fn _ -> :ok end
+    )
+    Stream.concat(
+      [{"vulnerability_analyses.csv", analyses_csv}],
+      sbom_stream
     )
   end
 
-  def manifest_entries_for(:starting, analyses_csv) do
+  def manifest_entries_for(file_name_list) do
     [
-      Zstream.entry("analyses.csv", [analyses_csv]),
-      manifest_entry_for_sboms([])
-    ]
-  end
-
-  def manifest_entries_for({:sboms, file_name_list}, analyses_csv) do
-    [
-      Zstream.entry("analyses.csv", [analyses_csv]),
       manifest_entry_for_sboms(file_name_list)
     ]
   end
 
   def manifest_entry_for_sboms(sbom_list) do
-    Zstream.entry("sbom_manifest.csv", CSV.encode([@export_sbom_rows|sbom_list]))
+    {"sbom_manifest.csv", Enum.join(CSV.encode([@export_sbom_rows|sbom_list]))}
   end
 
   def filename_and_content_for(sbom_entry) do
@@ -104,6 +94,9 @@ defmodule SectoryEtl.Export do
           deliverable_version_version: dv.version,
           deliverable_version_deliverable_name: d2.name,
           deliverable_name: d.name,
+          state: va.state,
+          justification: va.justification,
+          response: va.response,
           detail: va.detail
         }
 
@@ -155,6 +148,9 @@ defmodule SectoryEtl.Export do
       record.deliverable_version_version,
       record.deliverable_version_deliverable_name,
       record.deliverable_name,
+      record.state,
+      record.justification,
+      record.response,
       record.detail
     ]
   end

@@ -23,6 +23,7 @@ defmodule Sectory.Analysis.AnalyzedVersionSbom do
     deliverable_id = sbom_version.deliverable_version.deliverable_id
     sbom_data = sbom_version.sbom_content.data
     vuln_ids = extract_vulnerability_ids(sbom_data)
+
     analyses_query =
       from vas in Sectory.Records.VulnerabilityAnalysisScope,
         join: va in assoc(vas, :vulnerability_analysis),
@@ -30,36 +31,51 @@ defmodule Sectory.Analysis.AnalyzedVersionSbom do
         where:
           vas.deliverable_version_id == ^version_id or
             (vas.deliverable_id == ^deliverable_id and is_nil(vas.deliverable_version_id)) or
-            (is_nil(vas.deliverable_id) and is_nil(vas.deliverable_id) and vas.vulnerability_identifier in ^vuln_ids)
+            (is_nil(vas.deliverable_id) and is_nil(vas.deliverable_id) and
+               vas.vulnerability_identifier in ^vuln_ids)
+
     analyses = Sectory.Repo.all(analyses_query)
     merge_analyses(sbom_data, analyses)
   end
 
   defp merge_analyses(sbom_data, analyses) do
-    vuln_map = Map.new(analyses,
-     fn(a) ->
-       {a.vulnerability_identifier, scope_to_sbom_analysis(a)}
-     end)
+    vuln_map =
+      Map.new(
+        analyses,
+        fn a ->
+          {a.vulnerability_identifier, scope_to_sbom_analysis(a)}
+        end
+      )
+
     vulnerabilities = sbom_data["vulnerabilities"]
+
     case is_list(vulnerabilities) do
-      false -> sbom_data
-      _ -> Map.update!(sbom_data, "vulnerabilities", fn(vs) ->
-        Enum.map(vs, fn(v) -> merge_analysis_into_vulnerability(v, vuln_map) end)
-      end)
+      false ->
+        sbom_data
+
+      _ ->
+        Map.update!(sbom_data, "vulnerabilities", fn vs ->
+          Enum.map(vs, fn v -> merge_analysis_into_vulnerability(v, vuln_map) end)
+        end)
     end
   end
 
   defp merge_analysis_into_vulnerability(v, vuln_map) do
     vuln_id = v["id"]
     existing_analysis = v["analysis"]
+
     case {vuln_id, existing_analysis} do
-      {nil, _} -> v
-      {a, nil} ->
+      {nil, _} ->
+        v
+
+      {_, nil} ->
         case Map.has_key?(vuln_map, vuln_id) do
           false -> v
           _ -> Map.put(v, "analysis", vuln_map[vuln_id])
         end
-      _ -> v
+
+      _ ->
+        v
     end
   end
 

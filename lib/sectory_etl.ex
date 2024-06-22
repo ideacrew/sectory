@@ -1,9 +1,9 @@
 defmodule SectoryEtl do
   def load_sbom_path(sbom_name, sbom_location) do
-    SectoryEtl.Import.load_sbom_path(sbom_name, sbom_location)
+    SectoryEtl.Import.Sbom.load_sbom_path(sbom_name, sbom_location)
   end
 
   def import_sbom_map(sbom_name, sbom_map) do
-    SectoryEtl.Import.import_sbom_map(sbom_name, sbom_map)
+    SectoryEtl.Import.Sbom.import_sbom_map(sbom_name, sbom_map)
   end
 end
