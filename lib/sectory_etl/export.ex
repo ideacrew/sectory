@@ -30,6 +30,7 @@ defmodule SectoryEtl.Export do
     sbom_stream = Sectory.Repo.stream(sbom_query)
     {:ok, path} = Briefly.create(type: :directory)
     {:ok, zip_path} = Briefly.create()
+    File.mkdir(Path.join(path, "sboms"))
     {:ok, file_list} = Sectory.Repo.transaction(fn ->
       file_list_stream = stream_sbom_query(sbom_stream, analyses_csv)
       Enum.map(file_list_stream, fn({fname, fs}) ->
@@ -73,7 +74,7 @@ defmodule SectoryEtl.Export do
 
   def filename_and_content_for(sbom_entry) do
     uuid = Ecto.UUID.generate()
-    generated_filename = "#{uuid}.json"
+    generated_filename = Path.join(["sboms", "#{uuid}.json"])
     {
       sbom_entry.sbom_name,
       generated_filename,
