@@ -171,6 +171,13 @@ export function formatSeverity(vuln: Vulnerability) {
 }
 
 export function isPossibleAssignment(vuln: Vulnerability) {
+  if (vuln.analysis) {
+    if (vuln.analysis.state) {
+      if (vuln.analysis.state != cdx.Enums.Vulnerability.AnalysisState.InTriage) {
+        return false;
+      }
+    }
+  }
   if (vuln.properties) {
     if (vuln.properties.length > 0) {
       const property = vuln.properties.find((p) => p.name === "vuln-assign:certainty")
