@@ -10,12 +10,12 @@ type PropsType = {
 
 export class VulnerabilitiesSummaryComponent extends Component<PropsType, any, any> {
 
-  countSeverity(sev: cdx.Enums.Vulnerability.Severity) {
+  countSeverity(sev: cdx.Enums.Vulnerability.Severity, usePossibles: boolean) {
     if (this.props.dataLoader.bom?.vulnerabilities) {
       const vulns = this.props.dataLoader.bom?.vulnerabilities;
       if (vulns.length > 0) {
         const matching = vulns.filter((v) => {
-          return CycloneModel.formatSeverity(v) === sev;
+          return CycloneModel.formatSeverity(v) === sev && CycloneModel.isPossibleAssignment(v) === usePossibles;
         });
         return matching.length;
       }
@@ -23,12 +23,12 @@ export class VulnerabilitiesSummaryComponent extends Component<PropsType, any, a
     return 0;
   }
 
-  countComponentSeverity(sev: cdx.Enums.Vulnerability.Severity) {
+  countComponentSeverity(sev: cdx.Enums.Vulnerability.Severity, usePossibles: boolean) {
     if (this.props.dataLoader.bom?.vulnerabilities) {
       const vulns = this.props.dataLoader.bom?.vulnerabilities;
       if (vulns.length > 0) {
         const matching = vulns.filter((v) => {
-          return CycloneModel.formatSeverity(v) === sev;
+          return CycloneModel.formatSeverity(v) === sev && CycloneModel.isPossibleAssignment(v) === usePossibles;
         });
         return matching.reduce((acc, m) => {
           let value = 0;
@@ -48,8 +48,8 @@ export class VulnerabilitiesSummaryComponent extends Component<PropsType, any, a
     });
   }
 
-  kindSeverityBox(sev: cdx.Enums.Vulnerability.Severity, label: string) {
-    let count = this.countSeverity(sev);
+  kindSeverityBox(sev: cdx.Enums.Vulnerability.Severity, usePossibles: boolean, label: string) {
+    let count = this.countSeverity(sev, usePossibles);
     if (count === 0) {
       return "";
     }
@@ -59,8 +59,8 @@ export class VulnerabilitiesSummaryComponent extends Component<PropsType, any, a
            </div>;
   }
 
-  compSeverityBox(sev: cdx.Enums.Vulnerability.Severity, label: string) {
-    let count = this.countComponentSeverity(sev);
+  compSeverityBox(sev: cdx.Enums.Vulnerability.Severity, usePossibles: boolean, label: string) {
+    let count = this.countComponentSeverity(sev, usePossibles);
     if (count === 0) {
       return "";
     }
@@ -68,31 +68,81 @@ export class VulnerabilitiesSummaryComponent extends Component<PropsType, any, a
              <span className="count">{count}</span>
              <span className="label">{label}</span>
            </div>;
+  }
+
+  renderPossibleSummary(hasPossibles: boolean) {
+    if (hasPossibles) {
+      return <Fragment><div className="vuln-component-kind-summary">
+      <h3>Possible - By Kind</h3>
+      {this.kindSeverityBox(cdx.Enums.Vulnerability.Severity.Critical,true, "Critical")}
+      {this.kindSeverityBox(cdx.Enums.Vulnerability.Severity.High,true,"High")}
+      {this.kindSeverityBox(cdx.Enums.Vulnerability.Severity.Medium,true,"Medium")}
+      {this.kindSeverityBox(cdx.Enums.Vulnerability.Severity.Low,true,"Low")}
+      {this.kindSeverityBox(cdx.Enums.Vulnerability.Severity.Info,true,"Info")}
+      {this.kindSeverityBox(cdx.Enums.Vulnerability.Severity.None,true,"None")}
+      {this.kindSeverityBox(cdx.Enums.Vulnerability.Severity.Unknown,true,"Unknown")}
+      </div>
+      <div className="vuln-component-count-summary">
+      <h3>Possible - By Component</h3>
+      {this.compSeverityBox(cdx.Enums.Vulnerability.Severity.Critical,true,"Critical")}
+      {this.compSeverityBox(cdx.Enums.Vulnerability.Severity.High,true,"High")}
+      {this.compSeverityBox(cdx.Enums.Vulnerability.Severity.Medium,true,"Medium")}
+      {this.compSeverityBox(cdx.Enums.Vulnerability.Severity.Low,true,"Low")}
+      {this.compSeverityBox(cdx.Enums.Vulnerability.Severity.Info,true,"Info")}
+      {this.compSeverityBox(cdx.Enums.Vulnerability.Severity.None,true,"None")}
+      {this.compSeverityBox(cdx.Enums.Vulnerability.Severity.Unknown,true,"Unknown")}
+      </div>
+      </Fragment>
+    }
+    return "";
+  }
+
+  certaintyPrefix(hasPossibles: boolean) {
+    if (hasPossibles) {
+      return "Certain - ";
+    }
+    return "";
+  }
+
+  hasPossibles() {
+    if (this.props.dataLoader.bom?.vulnerabilities) {
+      const vulns = this.props.dataLoader.bom?.vulnerabilities;
+      if (vulns.length > 0) {
+        const matching = vulns.filter((v) => {
+          return CycloneModel.isPossibleAssignment(v);
+        });
+        return matching.length > 0;
+      }
+    }
+    return false;
   }
 
   public render(): ReactNode {
+    let hasPossibles = this.hasPossibles();
+
     return (
         <Fragment>
         <div className="vuln-component-kind-summary">
-        <h3>By Kind</h3>
-        {this.kindSeverityBox(cdx.Enums.Vulnerability.Severity.Critical,"Critical")}
-        {this.kindSeverityBox(cdx.Enums.Vulnerability.Severity.High,"High")}
-        {this.kindSeverityBox(cdx.Enums.Vulnerability.Severity.Medium,"Medium")}
-        {this.kindSeverityBox(cdx.Enums.Vulnerability.Severity.Low,"Low")}
-        {this.kindSeverityBox(cdx.Enums.Vulnerability.Severity.Info,"Info")}
-        {this.kindSeverityBox(cdx.Enums.Vulnerability.Severity.None,"None")}
-        {this.kindSeverityBox(cdx.Enums.Vulnerability.Severity.Unknown,"Unknown")}
+        <h3>{this.certaintyPrefix(hasPossibles)}By Kind</h3>
+        {this.kindSeverityBox(cdx.Enums.Vulnerability.Severity.Critical,false,"Critical")}
+        {this.kindSeverityBox(cdx.Enums.Vulnerability.Severity.High,false,"High")}
+        {this.kindSeverityBox(cdx.Enums.Vulnerability.Severity.Medium,false,"Medium")}
+        {this.kindSeverityBox(cdx.Enums.Vulnerability.Severity.Low,false,"Low")}
+        {this.kindSeverityBox(cdx.Enums.Vulnerability.Severity.Info,false,"Info")}
+        {this.kindSeverityBox(cdx.Enums.Vulnerability.Severity.None,false,"None")}
+        {this.kindSeverityBox(cdx.Enums.Vulnerability.Severity.Unknown,false,"Unknown")}
         </div>
         <div className="vuln-component-count-summary">
-        <h3>By Component</h3>
-        {this.compSeverityBox(cdx.Enums.Vulnerability.Severity.Critical,"Critical")}
-        {this.compSeverityBox(cdx.Enums.Vulnerability.Severity.High,"High")}
-        {this.compSeverityBox(cdx.Enums.Vulnerability.Severity.Medium,"Medium")}
-        {this.compSeverityBox(cdx.Enums.Vulnerability.Severity.Low,"Low")}
-        {this.compSeverityBox(cdx.Enums.Vulnerability.Severity.Info,"Info")}
-        {this.compSeverityBox(cdx.Enums.Vulnerability.Severity.None,"None")}
-        {this.compSeverityBox(cdx.Enums.Vulnerability.Severity.Unknown,"Unknown")}
+        <h3>{this.certaintyPrefix(hasPossibles)}By Component</h3>
+        {this.compSeverityBox(cdx.Enums.Vulnerability.Severity.Critical,false,"Critical")}
+        {this.compSeverityBox(cdx.Enums.Vulnerability.Severity.High,false,"High")}
+        {this.compSeverityBox(cdx.Enums.Vulnerability.Severity.Medium,false,"Medium")}
+        {this.compSeverityBox(cdx.Enums.Vulnerability.Severity.Low,false,"Low")}
+        {this.compSeverityBox(cdx.Enums.Vulnerability.Severity.Info,false,"Info")}
+        {this.compSeverityBox(cdx.Enums.Vulnerability.Severity.None,false,"None")}
+        {this.compSeverityBox(cdx.Enums.Vulnerability.Severity.Unknown,false,"Unknown")}
         </div>
+        {this.renderPossibleSummary(hasPossibles)}
         </Fragment>
     );
   }

@@ -8,7 +8,7 @@ defmodule SectoryWeb.DeliverableVersionController do
       where: dv.id == ^dv_id,
       join: vs in assoc(dv, :version_sboms),
       join: d in assoc(dv, :deliverable),
-      preload: [:deliverable, :version_sboms]
+      preload: [deliverable: d, version_sboms: vs]
     )
     conn
       |> assign(:page_title, "Deliverable")

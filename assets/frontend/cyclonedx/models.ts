@@ -81,6 +81,11 @@ export type VulnerabilityAnalysis = {
   lastUpdated?: string;
 };
 
+export type SbomProperty = {
+  name: string;
+  value?: string;
+}
+
 export type Vulnerability = {
   id: string;
   "bom-ref": string;
@@ -92,6 +97,7 @@ export type Vulnerability = {
   advisories?: Array<Advisory>;
   tools?: ToolSet;
   analysis?: VulnerabilityAnalysis;
+  properties?: Array<SbomProperty>;
 };
 
 export type ExternalRef = {
@@ -162,4 +168,18 @@ export function formatSeverity(vuln: Vulnerability) {
     }
   }
   return cdx.Enums.Vulnerability.Severity.Unknown;
+}
+
+export function isPossibleAssignment(vuln: Vulnerability) {
+  if (vuln.properties) {
+    if (vuln.properties.length > 0) {
+      const property = vuln.properties.find((p) => p.name === "vuln-assign:certainty")
+      if (property) {
+        if (property.value === "possible") {
+          return true;
+        }
+      }
+    }
+  }
+  return false;
 }

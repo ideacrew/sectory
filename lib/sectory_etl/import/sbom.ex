@@ -1,5 +1,6 @@
 defmodule SectoryEtl.Import.Sbom do
   alias Sectory.Repo
+  import Ecto.Query
 
   def load_sbom_path(sbom_name, sbom_location) do
     sbom_raw = File.read!(sbom_location)
@@ -49,16 +50,29 @@ defmodule SectoryEtl.Import.Sbom do
   end
 
   defp create_deliverable_version(d_record, comp_version, git_sha) do
-    query_part1 = [deliverable_id: d_record.id]
-    query_part2 = case comp_version do
-      nil -> query_part1
-      a -> [version: a]
+    find_query = case {comp_version, git_sha} do
+      {nil,_} ->
+        from dv in Sectory.Records.DeliverableVersion,
+        where:
+          dv.deliverable_id == ^d_record.id and
+          is_nil(dv.version) and
+          dv.git_sha == ^git_sha
+      {_,nil} ->
+            from dv in Sectory.Records.DeliverableVersion,
+            where:
+              dv.deliverable_id == ^d_record.id and
+              dv.version == ^comp_version and
+              is_nil(dv.git_sha)
+      _ ->
+        from dv in Sectory.Records.DeliverableVersion,
+        where:
+          dv.deliverable_id == ^d_record.id and
+          dv.comp_version == ^comp_version and
+          dv.git_sha == ^git_sha
     end
-    query = case git_sha do
-      nil -> query_part2
-      a -> [version: a] ++ query_part2
-    end
-    existing_record = Repo.get_by(Sectory.Records.DeliverableVersion, query)
+    existing_record = Repo.one(
+      find_query
+    )
     with nil <- existing_record do
       dvcs = Sectory.Records.DeliverableVersion.new(%{
         deliverable_id: d_record.id,
