@@ -22,7 +22,7 @@ export default function ShowComponent({ deliverable_version }) {
       <dd>{deliverable_version.git_sha}</dd>
      </dl>
 
-     <table>
+     <table className='list-table'>
       <thead>
         <tr>
           <th>Name</th>

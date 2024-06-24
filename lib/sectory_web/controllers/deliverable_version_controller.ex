@@ -11,7 +11,6 @@ defmodule SectoryWeb.DeliverableVersionController do
       preload: [deliverable: d, version_sboms: vs]
     )
     conn
-      |> assign(:page_title, "Deliverable")
       |> render_inertia(
         "DeliverableVersions/ShowComponent",
         %{

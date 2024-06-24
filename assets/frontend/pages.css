@@ -16,3 +16,11 @@ html {
 .item-summary dd {
   margin-inline-start: 1em;
 }
+
+.list-table {
+  border-collapse: collapse;
+}
+
+.list-table tbody tr {
+  border: 1px solid black;
+}

@@ -5,7 +5,6 @@ defmodule SectoryWeb.DeliverableController do
   def index(conn, _params) do
     records = Sectory.Repo.all(Sectory.Records.Deliverable)
     conn
-      |> assign(:page_title, "Deliverables")
       |> render_inertia("Deliverables/IndexComponent", %{deliverables: encode_records(records)})
   end
 
@@ -18,7 +17,6 @@ defmodule SectoryWeb.DeliverableController do
       preload: :deliverable
     )
     conn
-      |> assign(:page_title, "Deliverable")
       |> render_inertia(
         "Deliverables/ShowComponent",
         %{

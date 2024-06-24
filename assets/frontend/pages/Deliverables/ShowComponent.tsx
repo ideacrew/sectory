@@ -18,7 +18,7 @@ export default function ShowComponent({ deliverable }) {
       <dd>{deliverable.name}</dd>
      </dl>
 
-     <table>
+     <table className='list-table'>
       <thead>
         <tr>
           <th>Version</th>

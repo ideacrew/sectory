@@ -12,7 +12,7 @@ export default function IndexComponent({ deliverables }) {
    <>
      <Head title="Deliverables"/>
 
-     <table>
+     <table className='list-table'>
       <thead>
         <tr>
           <th>Name</th>

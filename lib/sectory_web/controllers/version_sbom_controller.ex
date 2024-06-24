@@ -10,7 +10,6 @@ defmodule SectoryWeb.VersionSbomController do
       preload: [:sbom_content]
     )
     conn
-    |> assign(:page_title, "Deliverable")
     |> render_inertia(
       "VersionSboms/ShowComponent",
       %{
