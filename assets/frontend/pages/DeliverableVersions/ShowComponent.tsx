@@ -13,7 +13,7 @@ export default function ShowComponent({ deliverable_version }) {
    <>
      <Head title="Deliverable"/>
 
-     <dl>
+     <dl className='item-summary'>
       <dt>Deliverable</dt>
       <dd>{deliverable_version.deliverable.name}</dd>
       <dt>Version</dt>

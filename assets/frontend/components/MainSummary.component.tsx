@@ -85,7 +85,7 @@ export class MainSummaryComponent extends Component<PropsType, any, any> {
   public render(): ReactNode {
     return (
       <div>
-        <dl>
+        <dl className="item-summary">
           <dt>Name</dt>
           <dd>{ this.extractName() }</dd>
           <dt>Version</dt>

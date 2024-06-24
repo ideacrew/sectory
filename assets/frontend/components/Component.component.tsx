@@ -164,7 +164,7 @@ export class ComponentComponent extends Component<PropsType, StateType, any> {
         </tr>
         <tr key={this.props.component["bom-ref"] + "-detailrow"} className={this.componentDetailClassName() + matchClass}>
           <td colSpan={2}>
-            <dl>
+            <dl className="item-summary">
               {this.purlValues()}
               {this.cpeValues()}
               {this.vcsValues()}

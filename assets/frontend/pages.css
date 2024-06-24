@@ -1,0 +1,18 @@
+html {
+  font-size: 12pt;
+}
+
+.item-summary {
+  display: grid;
+  grid-template-columns: min-content auto;
+}
+
+.item-summary dt {
+  font-weight: bold;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.item-summary dd {
+  margin-inline-start: 1em;
+}

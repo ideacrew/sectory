@@ -13,7 +13,7 @@ export default function ShowComponent({ deliverable }) {
    <>
      <Head title="Deliverable"/>
 
-     <dl>
+     <dl className="item-summary">
       <dt>Deliverable</dt>
       <dd>{deliverable.name}</dd>
      </dl>

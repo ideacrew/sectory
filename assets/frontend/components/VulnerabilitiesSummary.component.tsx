@@ -73,7 +73,7 @@ export class VulnerabilitiesSummaryComponent extends Component<PropsType, any, a
   renderPossibleSummary(hasPossibles: boolean) {
     if (hasPossibles) {
       return <Fragment><div className="vuln-component-kind-summary">
-      <h3>Possible - By Kind</h3>
+      <h3>Potential Vulnerabilities - By Kind</h3>
       {this.kindSeverityBox(cdx.Enums.Vulnerability.Severity.Critical,true, "Critical")}
       {this.kindSeverityBox(cdx.Enums.Vulnerability.Severity.High,true,"High")}
       {this.kindSeverityBox(cdx.Enums.Vulnerability.Severity.Medium,true,"Medium")}
@@ -83,7 +83,7 @@ export class VulnerabilitiesSummaryComponent extends Component<PropsType, any, a
       {this.kindSeverityBox(cdx.Enums.Vulnerability.Severity.Unknown,true,"Unknown")}
       </div>
       <div className="vuln-component-count-summary">
-      <h3>Possible - By Component</h3>
+      <h3>Potential Vulnerabilities - By Component</h3>
       {this.compSeverityBox(cdx.Enums.Vulnerability.Severity.Critical,true,"Critical")}
       {this.compSeverityBox(cdx.Enums.Vulnerability.Severity.High,true,"High")}
       {this.compSeverityBox(cdx.Enums.Vulnerability.Severity.Medium,true,"Medium")}
@@ -93,13 +93,6 @@ export class VulnerabilitiesSummaryComponent extends Component<PropsType, any, a
       {this.compSeverityBox(cdx.Enums.Vulnerability.Severity.Unknown,true,"Unknown")}
       </div>
       </Fragment>
-    }
-    return "";
-  }
-
-  certaintyPrefix(hasPossibles: boolean) {
-    if (hasPossibles) {
-      return "Certain - ";
     }
     return "";
   }
@@ -123,7 +116,7 @@ export class VulnerabilitiesSummaryComponent extends Component<PropsType, any, a
     return (
         <Fragment>
         <div className="vuln-component-kind-summary">
-        <h3>{this.certaintyPrefix(hasPossibles)}By Kind</h3>
+        <h3>By Kind</h3>
         {this.kindSeverityBox(cdx.Enums.Vulnerability.Severity.Critical,false,"Critical")}
         {this.kindSeverityBox(cdx.Enums.Vulnerability.Severity.High,false,"High")}
         {this.kindSeverityBox(cdx.Enums.Vulnerability.Severity.Medium,false,"Medium")}
@@ -133,7 +126,7 @@ export class VulnerabilitiesSummaryComponent extends Component<PropsType, any, a
         {this.kindSeverityBox(cdx.Enums.Vulnerability.Severity.Unknown,false,"Unknown")}
         </div>
         <div className="vuln-component-count-summary">
-        <h3>{this.certaintyPrefix(hasPossibles)}By Component</h3>
+        <h3>By Component</h3>
         {this.compSeverityBox(cdx.Enums.Vulnerability.Severity.Critical,false,"Critical")}
         {this.compSeverityBox(cdx.Enums.Vulnerability.Severity.High,false,"High")}
         {this.compSeverityBox(cdx.Enums.Vulnerability.Severity.Medium,false,"Medium")}

@@ -9,6 +9,7 @@ import * as dvsc from "./pages/DeliverableVersions/ShowComponent";
 import * as vssc from "./pages/VersionSboms/ShowComponent";
 import * as vanc from "./pages/VulnerabilityAnalyses/NewComponent"
 import axios from "axios";
+import "./pages.css";
 
 const pages = {
   'Deliverables/IndexComponent': dic,

@@ -182,7 +182,7 @@ export function isPossibleAssignment(vuln: Vulnerability) {
     if (vuln.properties.length > 0) {
       const property = vuln.properties.find((p) => p.name === "vuln-assign:certainty")
       if (property) {
-        if (property.value === "possible") {
+        if (property.value === "potential") {
           return true;
         }
       }
