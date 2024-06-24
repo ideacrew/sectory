@@ -4,22 +4,50 @@ import { VulnerabilityComponent } from "./Vulnerability.component"
 import * as CycloneModel from "../cyclonedx/models";
 import { VulnerabilitiesSummaryComponent } from "./VulnerabilitiesSummary.component";
 import React from 'react';
+import { VulnerabilitySearchComponent } from "./VulnerabilitySearch.component";
 
 type PropsType = {
   dataLoader: CycloneDataLoader;
   deliverableVersion: any;
 };
 
-export class VulnerabilitiesListComponent extends Component<PropsType, any, any> {
+type StateType = {
+  searchString: string;
+  searchValue: string;
+}
+
+export class VulnerabilitiesListComponent extends Component<PropsType, StateType, any> {
+  public constructor(props: PropsType) {
+    super(props);
+    this.state = {
+      searchString: "",
+      searchValue: ""
+    };
+  }
+
   sortVulns(vulns: Array<CycloneModel.Vulnerability>) {
     return vulns.sort((a, b) => {
       return CycloneModel.severitySort(CycloneModel.formatSeverity(b)) - CycloneModel.severitySort(CycloneModel.formatSeverity(a));
     });
   }
 
-  shouldComponentUpdate(_nextProps : PropsType, _nextState : any) {
-    return false;
-  };
+  public updateSearchString(v: string) : void {
+    this.setState((s) => {
+      if (v.length < 2) {
+        return {
+          ...s,
+          searchString: v,
+          searchValue: ""
+        };
+      } else {
+        return {
+          ...s,
+          searchString: v,
+          searchValue: v
+        };
+      }
+    });
+  }
 
   renderVulnerabilities() : ReactNode | string {
     const vulns = this.props.dataLoader.bom?.vulnerabilities;
@@ -27,7 +55,7 @@ export class VulnerabilitiesListComponent extends Component<PropsType, any, any>
       if (vulns.length > 0) {
         const sortedVulns = this.sortVulns(vulns);
         return sortedVulns.map(v => {
-          return <VulnerabilityComponent deliverableVersion={this.props.deliverableVersion} vulnerability={v} dataLoader={this.props.dataLoader} key={v["bom-ref"] + v["id"] + "vuln-row"}></VulnerabilityComponent>
+          return <VulnerabilityComponent deliverableVersion={this.props.deliverableVersion} vulnerability={v} dataLoader={this.props.dataLoader} key={v["bom-ref"] + v["id"] + "vuln-row"} searchValue={this.state.searchValue}></VulnerabilityComponent>
         });
       }
     }
@@ -38,6 +66,7 @@ export class VulnerabilitiesListComponent extends Component<PropsType, any, any>
     return (
         <Fragment>
         <VulnerabilitiesSummaryComponent dataLoader={this.props.dataLoader}/>
+        <VulnerabilitySearchComponent searchParent={this} searchString={this.state.searchString}/>
         <div>
           <table className="vuln-list-table">
             <thead>
