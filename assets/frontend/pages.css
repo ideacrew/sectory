@@ -21,6 +21,52 @@ html {
   font-size: 100%;
 }
 
+.form-horizontal {
+  display: grid;
+  grid-template-columns: min-content min-content;
+}
+
+.form-horizontal label {
+  grid-row-start: auto;
+  text-align: right;
+  margin-right: 0.5em;
+}
+
+.form-horizontal * {
+  margin-bottom: 0.5em;
+  margin-top: 0.5em;
+}
+
+.form-horizontal .errors {
+  grid-column-start: 2;
+}
+
+.form-horizontal textarea {
+  min-height: 10em;
+  min-width: 35em;
+}
+
+.form-horizontal input[type='submit'] {
+  width: max-content;
+  grid-column-start: 2;
+  margin-bottom: 0.5em;
+  margin-top: 0.5em;
+}
+
+.btn {
+  border: 1px solid transparent;
+  padding: .375rem .75rem;
+  line-height: 1.5;
+  border-radius: .25rem;
+  cursor: pointer;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
 .list-table {
   border-collapse: collapse;
 }

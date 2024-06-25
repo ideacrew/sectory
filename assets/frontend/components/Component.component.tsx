@@ -163,7 +163,7 @@ export class ComponentComponent extends Component<PropsType, StateType, any> {
           {this.detailsLink()}
         </tr>
         <tr key={this.props.component["bom-ref"] + "-detailrow"} className={this.componentDetailClassName() + matchClass}>
-          <td colSpan={2}>
+          <td colSpan={4}>
             <dl className="item-summary">
               {this.purlValues()}
               {this.cpeValues()}
