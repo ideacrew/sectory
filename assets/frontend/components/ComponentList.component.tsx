@@ -57,7 +57,7 @@ export class ComponentListComponent extends Component<PropsType, StateType, any>
       <table className="component-list-table">
         <thead>
           <tr>
-            <th>Name</th>
+            <th className="tal">Name</th>
             <th>Version</th>
             <th>Kind</th>
             <th>Details</th>

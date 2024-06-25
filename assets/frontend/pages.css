@@ -1,5 +1,6 @@
 html {
   font-size: 12pt;
+  font-family: Roboto, Arial, serif;
 }
 
 .item-summary {
@@ -11,10 +12,13 @@ html {
   font-weight: bold;
   text-align: right;
   white-space: nowrap;
+  font-size: 100%;
+  margin-bottom: 0.5em;
 }
 
 .item-summary dd {
   margin-inline-start: 1em;
+  font-size: 100%;
 }
 
 .list-table {
@@ -23,4 +27,16 @@ html {
 
 .list-table tbody tr {
   border: 1px solid black;
+}
+
+.tal {
+  text-align: left;
+}
+
+.tar {
+  text-align: right;
+}
+
+.tac {
+  text-align: center;
 }

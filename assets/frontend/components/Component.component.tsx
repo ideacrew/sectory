@@ -143,7 +143,7 @@ export class ComponentComponent extends Component<PropsType, StateType, any> {
 
   detailsLink() : ReactNode | string {
     if (this.componentHasDetails()) {
-      return <td onClick={this.toggleShow} className="table-detail-toggle">Details</td>;
+      return <td onClick={this.toggleShow} className="table-detail-toggle tac">Details</td>;
     }
     return "";
   }
@@ -158,8 +158,8 @@ export class ComponentComponent extends Component<PropsType, StateType, any> {
       <Fragment>
         <tr key={this.props.component["bom-ref"] + "-mainrow"} className={"component-main-row" + matchClass}>
           <td>{this.props.component.name}</td>
-          <td>{this.props.component.version}</td>
-          <td>{this.getComponentKind()}</td>
+          <td className="tac">{this.props.component.version}</td>
+          <td className="tac">{this.getComponentKind()}</td>
           {this.detailsLink()}
         </tr>
         <tr key={this.props.component["bom-ref"] + "-detailrow"} className={this.componentDetailClassName() + matchClass}>
