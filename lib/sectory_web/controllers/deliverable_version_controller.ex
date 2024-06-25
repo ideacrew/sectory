@@ -8,7 +8,9 @@ defmodule SectoryWeb.DeliverableVersionController do
       where: dv.id == ^dv_id,
       join: vs in assoc(dv, :version_sboms),
       join: d in assoc(dv, :deliverable),
-      preload: [deliverable: d, version_sboms: vs]
+      join: va in assoc(dv, :version_artifacts),
+      join: fa in assoc(va, :file_artifact),
+      preload: [deliverable: d, version_sboms: vs, version_artifacts: {va, file_artifact: fa}]
     )
     conn
       |> render_inertia(
@@ -34,6 +36,14 @@ defmodule SectoryWeb.DeliverableVersionController do
           name: vs.name,
           version_sbom_url: ~p"/version_sboms/#{vs.id}",
           analyzed_version_sbom_url: ~p"/version_sboms/#{vs.id}/analyzed"
+        }
+      end),
+      version_artifacts: Enum.map(record.version_artifacts, fn(va) ->
+        %{
+          id: va.id,
+          original_filename: va.original_filename,
+          size: va.file_artifact.size,
+          download_url: ~p"/version_artifacts/#{va.id}/download"
         }
       end)
     }

@@ -17,7 +17,7 @@ defmodule SectoryEtl.Import do
     end
   end
 
-  def read_sbom_manifest(sbm_data) do
+  defp read_sbom_manifest(sbm_data) do
     csv = CSV.decode([sbm_data], headers: true)
     Enum.map(csv, fn({:ok, rec}) ->
       rec

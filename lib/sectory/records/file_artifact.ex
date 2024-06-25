@@ -1,15 +1,13 @@
-defmodule Sectory.Records.VersionSbom do
+defmodule Sectory.Records.FileArtifact do
   use Ecto.Schema
   import Ecto.Changeset
 
-  schema "version_sboms" do
-    field :name, :string
+  schema "file_artifacts" do
     field :size, :integer
     field :sha256, :string
     field :sha384, :string
     field :sha512, :string
-    belongs_to :deliverable_version, Sectory.Records.DeliverableVersion
-    has_one :sbom_content, Sectory.Records.SbomContent
+    has_one :file_artifact_content, Sectory.Records.FileArtifactContent
     timestamps()
   end
 
@@ -20,22 +18,17 @@ defmodule Sectory.Records.VersionSbom do
   def changeset(version_sbom, params \\ %{}) do
     version_sbom
     |> cast(params, [
-      :name,
-      :deliverable_version_id,
       :size,
       :sha256,
       :sha384,
       :sha512
     ])
     |> validate_required([
-      :name,
-      :deliverable_version_id,
       :size,
       :sha256,
       :sha384,
       :sha512
     ])
-    |> validate_length(:name, max: 256)
     |> validate_length(:sha256, max: 512)
     |> validate_length(:sha384, max: 768)
     |> validate_length(:sha512, max: 1024)

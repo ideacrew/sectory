@@ -7,6 +7,7 @@ defmodule Sectory.Records.DeliverableVersion do
     field :git_sha, :string
     belongs_to :deliverable, Sectory.Records.Deliverable
     has_many :version_sboms, Sectory.Records.VersionSbom
+    has_many :version_artifacts, Sectory.Records.VersionArtifact
     timestamps()
   end
 

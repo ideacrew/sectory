@@ -21,14 +21,14 @@ defmodule Sectory.Repo.Migrations.AddDeliverableTables do
     create table("version_sboms") do
       add :deliverable_version_id, references(:deliverable_versions)
       add :name, :string, size: 256, null: false
-      add :length, :integer, null: false
+      add :size, :integer, null: false
       add :sha256, :string, size: 512, null: false
       add :sha384, :string, size: 768, null: false
       add :sha512, :string, size: 1024, null: false
       timestamps()
     end
 
-    create index(:version_sboms, ["length", "sha256", "sha384", "sha512"])
+    create index(:version_sboms, ["size", "sha256", "sha384", "sha512"])
     create index(:version_sboms, ["deliverable_version_id"])
     create index(:version_sboms, ["name"])
 

@@ -27,6 +27,9 @@ defmodule SectoryWeb.Router do
     scope "/version_sboms" do
       get "/:id/analyzed", VersionSbomController, :analyzed
     end
+    scope "/version_artifacts" do
+      get "/:id/download", VersionArtifactController, :download
+    end
     resources "/vulnerability_analyses", VulnerabilityAnalysisController, only: [:new, :create]
   end
 

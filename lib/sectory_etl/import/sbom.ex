@@ -60,7 +60,7 @@ defmodule SectoryEtl.Import.Sbom do
     query =
       from vs in Sectory.Records.VersionSbom,
         where:
-          vs.length == ^sbom_data[:length] and
+          vs.size == ^sbom_data[:size] and
             vs.sha256 == ^sbom_data[:sha256] and
             vs.sha384 == ^sbom_data[:sha384] and
             vs.sha512 == ^sbom_data[:sha512]
@@ -142,14 +142,14 @@ defmodule SectoryEtl.Import.Sbom do
     end
   end
 
-  def calculate_sbom_shas_and_length(sbom_string) do
+  defp calculate_sbom_shas_and_length(sbom_string) do
     length = byte_size(sbom_string)
     sha256_hash = :crypto.hash(:sha256, sbom_string)
     sha384_hash = :crypto.hash(:sha384, sbom_string)
     sha512_hash = :crypto.hash(:sha512, sbom_string)
 
     %{
-      length: length,
+      size: length,
       sha256: Base.encode16(sha256_hash, case: :lower),
       sha384: Base.encode16(sha384_hash, case: :lower),
       sha512: Base.encode16(sha512_hash, case: :lower)
