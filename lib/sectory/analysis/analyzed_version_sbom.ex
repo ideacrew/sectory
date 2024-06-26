@@ -22,7 +22,6 @@ defmodule Sectory.Analysis.AnalyzedVersionSbom do
     version_id = sbom_version.deliverable_version_id
     deliverable_id = sbom_version.deliverable_version.deliverable_id
     sbom_data = sbom_version.sbom_content.data
-    vuln_ids = extract_vulnerability_ids(sbom_data)
 
     analyses_query =
       from vas in Sectory.Records.VulnerabilityAnalysisScope,
@@ -32,7 +31,7 @@ defmodule Sectory.Analysis.AnalyzedVersionSbom do
           vas.deliverable_version_id == ^version_id or
             (vas.deliverable_id == ^deliverable_id and is_nil(vas.deliverable_version_id)) or
             (is_nil(vas.deliverable_id) and is_nil(vas.deliverable_id) and
-               vas.vulnerability_identifier in ^vuln_ids)
+               vas.vulnerability_identifier in fragment("select distinct(cast(jsonb_array_elements(data->'vulnerabilities')->'id' as varchar(128))) from sbom_contents"))
 
     analyses = Sectory.Repo.all(analyses_query)
     merge_analyses(sbom_data, analyses)
@@ -129,19 +128,5 @@ defmodule Sectory.Analysis.AnalyzedVersionSbom do
       firstIssued: vas.inserted_at,
       lastUpdated: vas.updated_at
     }
-  end
-
-  defp extract_vulnerability_ids(sbom_data) do
-    vulnerabilities = get_in(sbom_data, ["vulnerabilities"])
-
-    case is_list(vulnerabilities) do
-      false ->
-        []
-
-      _ ->
-        for item <- vulnerabilities, item["id"] != nil do
-          item["id"]
-        end
-    end
   end
 end
