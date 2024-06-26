@@ -23,7 +23,7 @@ defmodule SectoryEtl.Export do
     "deliverable_name",
     "deliverable_version_version",
     "deliverable_version_sha",
-    "original_file_name",
+    "original_filename",
     "artifact_file"
   ]
 
