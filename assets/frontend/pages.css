@@ -28,6 +28,7 @@ html {
 
 .form-horizontal label {
   grid-row-start: auto;
+  width: max-content;
   text-align: right;
   margin-right: 0.5em;
 }

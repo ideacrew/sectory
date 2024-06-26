@@ -6,10 +6,10 @@ defmodule SectoryWeb.DeliverableVersionController do
     record = Sectory.Repo.one!(
       from dv in Sectory.Records.DeliverableVersion,
       where: dv.id == ^dv_id,
-      join: vs in assoc(dv, :version_sboms),
+      left_join: vs in assoc(dv, :version_sboms),
       join: d in assoc(dv, :deliverable),
-      join: va in assoc(dv, :version_artifacts),
-      join: fa in assoc(va, :file_artifact),
+      left_join: va in assoc(dv, :version_artifacts),
+      left_join: fa in assoc(va, :file_artifact),
       preload: [deliverable: d, version_sboms: vs, version_artifacts: {va, file_artifact: fa}]
     )
     conn

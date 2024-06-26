@@ -8,7 +8,7 @@ type DeepPartial<T> = {
 };
 */
 
-const SeverityOrder = [
+export const SeverityOrder = [
   cdx.Enums.Vulnerability.Severity.None,
   cdx.Enums.Vulnerability.Severity.Unknown,
   cdx.Enums.Vulnerability.Severity.Info,
@@ -150,14 +150,7 @@ const noSeverityAnalysisStates = [
   cdx.Enums.Vulnerability.AnalysisState.ResolvedWithPedigree
 ];
 
-export function formatSeverity(vuln: Vulnerability) {
-  if (vuln.analysis) {
-    if (vuln.analysis.state) {
-      if (noSeverityAnalysisStates.indexOf(vuln.analysis.state) > -1) {
-        return cdx.Enums.Vulnerability.Severity.None;
-      }
-    }
-  }
+export function ratingSeverity(vuln: Vulnerability) {
   if (vuln.ratings) {
     const ratings = vuln.ratings;
     if (ratings.length > 0) {
@@ -166,6 +159,18 @@ export function formatSeverity(vuln: Vulnerability) {
       });
       return sortedRatings[0].severity;
     }
+  }
+  return null;
+}
+
+export function formatSeverity(vuln: Vulnerability) {
+  const adjusted_severity = adjustedSeverityFor(vuln);
+  if (adjusted_severity) {
+    return adjusted_severity;
+  }
+  const rating_severity = ratingSeverity(vuln);
+  if (rating_severity) {
+    return rating_severity;
   }
   return cdx.Enums.Vulnerability.Severity.Unknown;
 }
@@ -189,4 +194,16 @@ export function isPossibleAssignment(vuln: Vulnerability) {
     }
   }
   return false;
+}
+
+export function adjustedSeverityFor(vuln : Vulnerability) {
+  if (vuln.properties) {
+    const found_adjusted_severity = vuln.properties.find(vp => {
+      return vp.name && vp.name === "vuln-assign:analysis_severity";
+    });
+    if (found_adjusted_severity && found_adjusted_severity.value) {
+      return found_adjusted_severity.value;
+    }
+  }
+  return null;
 }

@@ -43,7 +43,7 @@ defmodule Sectory.Analysis.AnalyzedVersionSbom do
       Map.new(
         analyses,
         fn a ->
-          {a.vulnerability_identifier, scope_to_sbom_analysis(a)}
+          {a.vulnerability_identifier, a}
         end
       )
 
@@ -55,7 +55,10 @@ defmodule Sectory.Analysis.AnalyzedVersionSbom do
 
       _ ->
         Map.update!(sbom_data, "vulnerabilities", fn vs ->
-          Enum.map(vs, fn v -> merge_analysis_into_vulnerability(v, vuln_map) end)
+          Enum.map(vs, fn v ->
+            v
+            |> merge_analysis_into_vulnerability(vuln_map)
+          end)
         end)
     end
   end
@@ -70,12 +73,50 @@ defmodule Sectory.Analysis.AnalyzedVersionSbom do
 
       {_, nil} ->
         case Map.has_key?(vuln_map, vuln_id) do
-          false -> v
-          _ -> Map.put(v, "analysis", vuln_map[vuln_id])
+          false ->
+            v
+
+          _ ->
+            v
+            |> apply_vuln_analysis(vuln_map[vuln_id])
+            |> update_vuln_severity(vuln_map[vuln_id])
         end
 
       _ ->
         v
+    end
+  end
+
+  def apply_vuln_analysis(v, analysis_record) do
+    Map.put(v, "analysis", scope_to_sbom_analysis(analysis_record))
+  end
+
+  def update_vuln_severity(v, analysis_record) do
+    case Map.has_key?(v, "properties") do
+      false ->
+        Map.put(v, "properties", [
+          %{
+            name: "vuln-assign:analysis_severity",
+            value: analysis_record.vulnerability_analysis.adjusted_severity
+          }
+        ])
+
+      _ ->
+        Map.update!(v, "properties", fn props ->
+          clean_props =
+            props
+            |> Enum.filter(fn prop ->
+              prop["name"] == "vuln-assign:analysis_severity"
+            end)
+
+          [
+            %{
+              name: "vuln-assign:analysis_severity",
+              value: analysis_record.vulnerability_analysis.adjusted_severity
+            }
+            | clean_props
+          ]
+        end)
     end
   end
 

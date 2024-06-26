@@ -18,7 +18,8 @@ defmodule SectoryWeb.Router do
   scope "/", SectoryWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    get "/", HomeController, :index
+    get "/pages/home", PageController, :home
     resources "/deliverables", DeliverableController, only: [:index, :show]
     resources "/deliverable_versions", DeliverableVersionController, only: [:show]
     resources "/version_sboms", VersionSbomController, only: [:show]

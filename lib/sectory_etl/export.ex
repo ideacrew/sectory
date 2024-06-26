@@ -10,6 +10,7 @@ defmodule SectoryEtl.Export do
     "state",
     "justification",
     "response",
+    "adjusted_severity",
     "detail"
   ]
 
@@ -98,6 +99,7 @@ defmodule SectoryEtl.Export do
           state: va.state,
           justification: va.justification,
           response: va.response,
+          adjusted_severity: va.adjusted_severity,
           detail: va.detail
         }
 
@@ -152,6 +154,7 @@ defmodule SectoryEtl.Export do
       record.state,
       record.justification,
       record.response,
+      record.adjusted_severity,
       record.detail
     ]
   end
