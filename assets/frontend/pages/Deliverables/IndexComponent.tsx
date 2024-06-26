@@ -4,7 +4,7 @@ import React from 'react'
 export default function IndexComponent({ deliverables }) {
   const deliverableTags = deliverables.map((d) => {
     return <tr key={d.id}>
-      <td><a href={d.versions_url}>{d.name}</a></td>
+      <td><Link href={d.versions_url}>{d.name}</Link></td>
     </tr>
   });
 

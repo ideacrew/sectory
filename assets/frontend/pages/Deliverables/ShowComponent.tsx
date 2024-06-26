@@ -4,8 +4,8 @@ import React from 'react'
 export default function ShowComponent({ deliverable, new_deliverable_version_url }) {
   const deliverableVersionTags = deliverable.deliverable_versions.map((d) => {
     return <tr key={d.id}>
-      <td><a href={d.deliverable_version_url}>{d.version}</a></td>
-      <td className='mono'><a href={d.deliverable_version_url}>{d.git_sha}</a></td>
+      <td><Link href={d.deliverable_version_url}>{d.version}</Link></td>
+      <td className='mono'><Link href={d.deliverable_version_url}>{d.git_sha}</Link></td>
     </tr>
   });
 
@@ -20,7 +20,7 @@ export default function ShowComponent({ deliverable, new_deliverable_version_url
 
      <h2>Versions</h2>
 
-     <a href={new_deliverable_version_url}>New Version</a>
+     <Link href={new_deliverable_version_url}>New Version</Link>
 
      <table className='list-table'>
       <thead>
