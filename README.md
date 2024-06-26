@@ -2,7 +2,7 @@
 
 **Sec**urity Inven**tory** is a tool for building inventories of software and analyzing vulnerabilities.
 
-It allows you to upload sofware bills of materials (SBOMs) and track the vulnerabilties as well as the mitigations you attest against them - reporting this information in various formats.
+It allows you to upload sofware bills of materials (SBOMs) and other delivery artifacts, and track the vulnerabilties as well as the mitigations you attest against them - reporting this information in various formats.
 
 ## Running
 
