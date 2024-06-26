@@ -20,7 +20,9 @@ defmodule SectoryWeb.Router do
 
     get "/", HomeController, :index
     get "/pages/home", PageController, :home
-    resources "/deliverables", DeliverableController, only: [:index, :show]
+    resources "/deliverables", DeliverableController, only: [:index, :show] do
+      resources "/deliverable_versions", DeliverableVersionController, only: [:new, :create]
+    end
     resources "/deliverable_versions", DeliverableVersionController, only: [:show]
     resources "/version_sboms", VersionSbomController, only: [:show]
     get "/exports/vulnerability_analyses", ExportsController, :vulnerability_analyses, as: :vulnerability_analyses

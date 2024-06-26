@@ -1,6 +1,6 @@
 html {
   font-size: 12pt;
-  font-family: Roboto, Arial, serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 .item-summary {
@@ -86,4 +86,9 @@ html {
 
 .tac {
   text-align: center;
+}
+
+.mono {
+  font-size: 10pt;
+  font-family: "Roboto Mono"
 }

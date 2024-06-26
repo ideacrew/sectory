@@ -1,11 +1,11 @@
 import { Head, Link } from '@inertiajs/react'
 import React from 'react'
 
-export default function ShowComponent({ deliverable }) {
+export default function ShowComponent({ deliverable, new_deliverable_version_url }) {
   const deliverableVersionTags = deliverable.deliverable_versions.map((d) => {
     return <tr key={d.id}>
       <td><a href={d.deliverable_version_url}>{d.version}</a></td>
-      <td><a href={d.deliverable_version_url}>{d.git_sha}</a></td>
+      <td className='mono'><a href={d.deliverable_version_url}>{d.git_sha}</a></td>
     </tr>
   });
 
@@ -17,6 +17,10 @@ export default function ShowComponent({ deliverable }) {
       <dt>Deliverable</dt>
       <dd>{deliverable.name}</dd>
      </dl>
+
+     <h2>Versions</h2>
+
+     <a href={new_deliverable_version_url}>New Version</a>
 
      <table className='list-table'>
       <thead>

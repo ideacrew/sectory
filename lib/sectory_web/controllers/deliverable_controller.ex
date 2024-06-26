@@ -20,7 +20,8 @@ defmodule SectoryWeb.DeliverableController do
       |> render_inertia(
         "Deliverables/ShowComponent",
         %{
-          deliverable: encode_deliverable(record, records)
+          deliverable: encode_deliverable(record, records),
+          new_deliverable_version_url: ~p"/deliverables/#{d_id}/deliverable_versions/new"
         }
         )
   end

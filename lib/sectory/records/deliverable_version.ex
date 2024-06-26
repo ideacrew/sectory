@@ -21,5 +21,22 @@ defmodule Sectory.Records.DeliverableVersion do
       |> validate_required([:deliverable_id])
       |> validate_length(:version, max: 128)
       |> validate_length(:git_sha, max: 128)
+      |> validate_version_or_sha()
   end
+
+  def validate_version_or_sha(changeset) do
+    version_change = cast_blanks(get_change(changeset, :version))
+    sha_change = cast_blanks(get_change(changeset, :git_sha))
+    case {version_change, sha_change} do
+      {nil, nil} ->
+        changeset
+        |> add_error(:git_sha, "git sha or version must be specified")
+        |> add_error(:version, "git sha or version must be specified")
+      _ -> changeset
+    end
+  end
+
+  def cast_blanks(nil), do: nil
+  def cast_blanks(nil), do: nil
+  def cast_blanks(a), do: a
 end

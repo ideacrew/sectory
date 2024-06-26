@@ -21,6 +21,34 @@ defmodule SectoryWeb.DeliverableVersionController do
       )
   end
 
+  def new(conn, params) do
+    deliverable = Sectory.Repo.get!(Sectory.Records.Deliverable, params["deliverable_id"])
+    conn
+      |> render_inertia(
+        "DeliverableVersions/NewComponent",
+        %{
+          deliverable_id: deliverable.id,
+          deliverable_name: deliverable.name,
+          create_url: ~p"/deliverables/#{deliverable.id}/deliverable_versions"
+        }
+      )
+  end
+
+  def create(conn, params) do
+    deliverable_id = params["deliverable_id"]
+    cs = Sectory.Records.DeliverableVersion.new(params)
+    case cs.valid? do
+      false ->
+        conn
+          |> assign_errors(cs)
+          |> redirect(to: ~p"/deliverables/#{deliverable_id}/deliverable_versions/new")
+      _ ->
+        {:ok, _} = Sectory.Repo.insert(cs)
+        conn
+          |> redirect(to: ~p"/deliverables/#{deliverable_id}")
+    end
+  end
+
   defp encode_record(record) do
     %{
       id: record.id,
