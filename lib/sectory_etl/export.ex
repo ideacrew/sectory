@@ -19,63 +19,148 @@ defmodule SectoryEtl.Export do
     "sbom_file"
   ]
 
+  @export_artifact_rows [
+    "deliverable_name",
+    "deliverable_version_version",
+    "deliverable_version_sha",
+    "original_file_name",
+    "artifact_file"
+  ]
+
   def export_sbom_and_analysis_package() do
     analyses_csv = export_analysis_records()
+
     sbom_query =
       from vs in Sectory.Records.VersionSbom,
-      join: sc in assoc(vs, :sbom_content),
-      select: %{
-        sbom_name: vs.name,
-        data: sc.data
-      }
+        join: sc in assoc(vs, :sbom_content),
+        select: %{
+          sbom_name: vs.name,
+          data: sc.data
+        }
+
     sbom_stream = Sectory.Repo.stream(sbom_query)
     {:ok, path} = Briefly.create(type: :directory)
     {:ok, zip_path} = Briefly.create()
     File.mkdir(Path.join(path, "sboms"))
-    {:ok, file_list} = Sectory.Repo.transaction(fn ->
-      file_list_stream = stream_sbom_query(sbom_stream, analyses_csv)
-      Enum.map(file_list_stream, fn({fname, fs}) ->
-        f_path = Path.join([path, fname])
-        out_file = File.open!(f_path, [:write, :binary])
-        IO.binwrite(out_file, fs)
-        File.close(out_file)
-        to_charlist(fname)
+    File.mkdir(Path.join(path, "artifacts"))
+
+    {:ok, file_list} =
+      Sectory.Repo.transaction(fn ->
+        file_list_stream = stream_sbom_query(sbom_stream, analyses_csv)
+
+        Enum.map(file_list_stream, fn {fname, fs} ->
+          f_path = Path.join([path, fname])
+          out_file = File.open!(f_path, [:write, :binary])
+          IO.binwrite(out_file, fs)
+          File.close(out_file)
+          to_charlist(fname)
+        end)
       end)
-    end)
-    :zip.create(to_charlist(zip_path), file_list, [{:cwd, to_charlist(path)}, :verbose])
+
+    artifact_content_query =
+      from va in Sectory.Records.VersionArtifact,
+        join: fa in assoc(va, :file_artifact),
+        join: fc in assoc(fa, :file_artifact_content),
+        join: dv in assoc(va, :deliverable_version),
+        join: d in assoc(dv, :deliverable),
+        select: %{
+          deliverable_version_version: dv.version,
+          deliverable_version_sha: dv.git_sha,
+          deliverable_name: d.name,
+          original_file_name: va.original_filename,
+          content: fc.content
+        }
+
+    artifact_content_stream = Sectory.Repo.stream(artifact_content_query)
+
+    {:ok, artifact_file_list} =
+      Sectory.Repo.transaction(fn _ ->
+        artifact_file_stream = stream_artifact_query(artifact_content_stream)
+
+        Enum.map(artifact_file_stream, fn {fname, fs} ->
+          f_path = Path.join([path, fname])
+          out_file = File.open!(f_path, [:write, :binary])
+          IO.binwrite(out_file, fs)
+          File.close(out_file)
+          to_charlist(fname)
+        end)
+      end)
+
+    :zip.create(to_charlist(zip_path), file_list ++ artifact_file_list, [
+      {:cwd, to_charlist(path)},
+      :verbose
+    ])
+
     zip_path
   end
 
-  def stream_sbom_query(sbom_stream, analyses_csv) do
-    sbom_stream = Stream.transform(
-      sbom_stream,
-      fn() -> [] end,
+  defp stream_artifact_query(artifact_stream) do
+    Stream.transform(
+      artifact_stream,
+      fn -> [] end,
       fn ele, acc ->
-          {sbom_name, sbom_filename, sbom_entry} = filename_and_content_for(ele)
-          {[{sbom_filename, sbom_entry}], [[sbom_name, sbom_filename]|acc]}
+        {artifact_filename, artifact_csv_row, artifact_content} = artifact_data_for(ele)
+        {[{artifact_filename, artifact_content}], [artifact_csv_row | acc]}
       end,
-      fn acc -> {manifest_entries_for(acc), acc} end,
+      fn acc -> {artifact_manifest_entries_for(acc), acc} end,
       fn _ -> :ok end
     )
+  end
+
+  defp artifact_data_for(entry) do
+    uuid = Ecto.UUID.generate()
+    generated_filename = Path.join(["artifacts", "#{uuid}.binary"])
+
+    csv_row = [
+      entry.deliverable_name,
+      entry.deliverable_version_version,
+      entry.deliverable_version_sha,
+      entry.original_file_name,
+      generated_filename
+    ]
+
+    {generated_filename, csv_row, entry.content}
+  end
+
+  defp artifact_manifest_entries_for(artifact_entries) do
+    [
+      {"artifact_manifest.csv", Enum.join(CSV.encode([@export_artifact_rows | artifact_entries]))}
+    ]
+  end
+
+  defp stream_sbom_query(sbom_stream, analyses_csv) do
+    sbom_stream =
+      Stream.transform(
+        sbom_stream,
+        fn -> [] end,
+        fn ele, acc ->
+          {sbom_name, sbom_filename, sbom_entry} = filename_and_content_for(ele)
+          {[{sbom_filename, sbom_entry}], [[sbom_name, sbom_filename] | acc]}
+        end,
+        fn acc -> {manifest_entries_for(acc), acc} end,
+        fn _ -> :ok end
+      )
+
     Stream.concat(
       [{"vulnerability_analyses.csv", analyses_csv}],
       sbom_stream
     )
   end
 
-  def manifest_entries_for(file_name_list) do
+  defp manifest_entries_for(file_name_list) do
     [
       manifest_entry_for_sboms(file_name_list)
     ]
   end
 
-  def manifest_entry_for_sboms(sbom_list) do
-    {"sbom_manifest.csv", Enum.join(CSV.encode([@export_sbom_rows|sbom_list]))}
+  defp manifest_entry_for_sboms(sbom_list) do
+    {"sbom_manifest.csv", Enum.join(CSV.encode([@export_sbom_rows | sbom_list]))}
   end
 
-  def filename_and_content_for(sbom_entry) do
+  defp filename_and_content_for(sbom_entry) do
     uuid = Ecto.UUID.generate()
     generated_filename = Path.join(["sboms", "#{uuid}.json"])
+
     {
       sbom_entry.sbom_name,
       generated_filename,
