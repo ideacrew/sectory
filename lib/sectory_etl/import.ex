@@ -1,6 +1,4 @@
 defmodule SectoryEtl.Import do
-
-  @spec import_sbom_and_analysis_package(any()) :: :ok | {:error, :einval}
   def import_sbom_and_analysis_package(path) do
     with {:ok, zip} = :zip.zip_open(to_charlist(path), [:memory]) do
       {:ok, {_, sbm_data}} = :zip.zip_get(to_charlist("sbom_manifest.csv"), zip)
