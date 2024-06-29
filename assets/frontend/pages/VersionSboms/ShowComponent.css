@@ -43,10 +43,6 @@
   cursor: pointer;
 }
 
-.component-list-table th {
-  
-}
-
 tr.component-main-row {
   border: 1px solid black;
 }
@@ -110,10 +106,14 @@ td {
 
 .vuln-severity-box {
   display: inline-block;
-  margin: 1em;
-  padding: 1em;
+  margin: 0.5em;
+  padding: 0.5em;
   color: white;
   width: 5em;
+}
+
+.vuln-severity-box:hover {
+  box-shadow: 0 0 9px 3px rgba(41,41,41,.25);
 }
 
 .vuln-severity-box span {
