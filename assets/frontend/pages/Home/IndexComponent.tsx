@@ -6,7 +6,6 @@ export default function IndexComponent({ deliverables_url, stats }) {
     <>
       <Head title="Sectory" />
 
-      <a href={deliverables_url}>Click here to manage deliverables.</a>
       <h2>Sectory is currently tracking:</h2>
       <table className="home-statistics">
         <thead>

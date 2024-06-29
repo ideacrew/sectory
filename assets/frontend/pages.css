@@ -3,6 +3,47 @@ html {
   font-family: "Open Sans", sans-serif;
 }
 
+body {
+  margin: 0px;
+}
+
+main {
+  margin: 8px;
+}
+
+.pageContainer {
+  display: grid;
+  grid-template-rows: min-content auto;
+  grid-template-columns: auto;
+}
+
+.main-nav {
+  box-shadow: 0 0 9px 3px rgba(41,41,41,.25);
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+}
+
+.main-nav img {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.main-nav ol {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  padding-inline-start: 0px;
+}
+
+.main-nav ol li {
+  padding-right: 1em;
+}
+
+.main-nav ol li a {
+  text-decoration: none;
+}
+
 .item-summary {
   display: grid;
   grid-template-columns: min-content auto;

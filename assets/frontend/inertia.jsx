@@ -12,6 +12,7 @@ import * as vanc from "./pages/VulnerabilityAnalyses/NewComponent"
 import * as hic from "./pages/Home/IndexComponent"
 import axios from "axios";
 import "./pages.css";
+import Layout from "./pages/shared/Layout";
 
 const pages = {
   'Deliverables/IndexComponent': dic,
@@ -27,7 +28,12 @@ axios.defaults.xsrfHeaderName = "x-csrf-token";
 
 createInertiaApp({
   resolve: (name) => {
-    return pages[name];
+    const thePage = pages[name];
+    thePage.default.layout = (page) => {
+      const layout = thePage.layout || Layout;
+      return <Layout children={page} mainNavLinks={page.props.mainNavLinks}></Layout>
+    }
+    return thePage;
   },
   setup({ App, el, props }) {
     createRoot(el).render(<App {...props} />);

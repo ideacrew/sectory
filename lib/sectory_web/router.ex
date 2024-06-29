@@ -8,6 +8,7 @@ defmodule SectoryWeb.Router do
     plug :put_root_layout, html: {SectoryWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug SectoryWeb.InertiaShare
     plug Inertia.Plug
   end
 
