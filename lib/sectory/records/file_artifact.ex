@@ -2,6 +2,10 @@ defmodule Sectory.Records.FileArtifact do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @moduledoc """
+  Stores metadata about a file artifact.
+  """
+
   schema "file_artifacts" do
     field :size, :integer
     field :sha256, :string

@@ -1,6 +1,11 @@
 defmodule Sectory.Analysis.AnalyzedVersionSbom do
   import Ecto.Query
 
+  @moduledoc """
+  Perform analysis against a given SBOM and update analysis and severity
+  records accordingly.
+  """
+
   def find_analyzed_record(version_sbom_id) do
     record = find_record(version_sbom_id)
     analysis = apply_analysis_to_sbom(record)
@@ -30,8 +35,8 @@ defmodule Sectory.Analysis.AnalyzedVersionSbom do
         where:
           vas.deliverable_version_id == ^version_id or
             (vas.deliverable_id == ^deliverable_id and is_nil(vas.deliverable_version_id)) or
-            (is_nil(vas.deliverable_id) and is_nil(vas.deliverable_id) and
-               vas.vulnerability_identifier in fragment("select distinct(cast(jsonb_array_elements(data->'vulnerabilities')->'id' as varchar(128))) from sbom_contents"))
+            (is_nil(vas.deliverable_id) and is_nil(vas.deliverable_version_id) and
+               vas.vulnerability_identifier in fragment("select distinct(cast(jsonb_array_elements(data->'vulnerabilities')->'id' as varchar(128))) from sbom_contents where version_sbom_id = ?", ^sbom_version.id))
 
     analyses = Sectory.Repo.all(analyses_query)
     merge_analyses(sbom_data, analyses)

@@ -1,6 +1,10 @@
 defmodule SectoryEtl.Export do
   import Ecto.Query
 
+  @moduledoc """
+  Perform exports and dumps of various records and data.
+  """
+
   @export_analysis_rows [
     "vulnerability_identifier",
     "deliverable_version_sha",

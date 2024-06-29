@@ -1,6 +1,13 @@
 defmodule SectoryEtl.Import.VersionArtifact do
   import Ecto.Query
 
+  @moduledoc """
+  Import version artifacts.
+
+  Currently offers import abilities for a minimal data-set file and from
+  the previously exported CSV format.
+  """
+
   def import_version_artifact_with_id(deliverable_version_id, orig_file_name, artifact_content) do
     with {:ok, existing_data} <- check_artifact_content_exists(artifact_content) do
       case existing_data do
@@ -101,7 +108,7 @@ defmodule SectoryEtl.Import.VersionArtifact do
           content: artifact_content
         })
 
-      with {:ok, _} = Sectory.Repo.insert(fac_cs) do
+      with {:ok, _} <- Sectory.Repo.insert(fac_cs) do
         cs =
           Sectory.Records.VersionArtifact.new(%{
             deliverable_version_id: deliverable_version_id,

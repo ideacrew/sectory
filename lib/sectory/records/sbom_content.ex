@@ -2,6 +2,10 @@ defmodule Sectory.Records.SbomContent do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @moduledoc """
+  Stores the physical data of an SBOM, in json format.
+  """
+
   schema "sbom_contents" do
     field :data, :map, default: %{}
     belongs_to :version_sbom, Sectory.Records.VersionSbom

@@ -2,6 +2,10 @@ defmodule Sectory.Records.DeliverableVersion do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @moduledoc """
+  A particular version of a deliverable.
+  """
+
   schema "deliverable_versions" do
     field :version, :string
     field :git_sha, :string

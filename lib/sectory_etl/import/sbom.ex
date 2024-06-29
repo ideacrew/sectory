@@ -2,6 +2,10 @@ defmodule SectoryEtl.Import.Sbom do
   alias Sectory.Repo
   import Ecto.Query
 
+  @moduledoc """
+  Import SBOMS, from either a raw format or specialized export.
+  """
+
   def load_sbom_path(sbom_name, sbom_location) do
     sbom_raw = File.read!(sbom_location)
     load_sbom_string(sbom_name, sbom_raw)

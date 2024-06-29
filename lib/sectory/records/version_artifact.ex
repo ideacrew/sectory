@@ -2,6 +2,10 @@ defmodule Sectory.Records.VersionArtifact do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @moduledoc """
+  Associates a deliverable version with a given file artifact.
+  """
+
   schema "version_artifacts" do
     field :original_filename, :string
     belongs_to :deliverable_version, Sectory.Records.DeliverableVersion

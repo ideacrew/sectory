@@ -2,6 +2,10 @@ defmodule Sectory.Records.VersionSbom do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @moduledoc """
+  Metadata about a particular SBOM and it's association to a version.
+  """
+
   schema "version_sboms" do
     field :name, :string
     field :size, :integer

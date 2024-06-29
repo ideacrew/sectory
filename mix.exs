@@ -45,13 +45,14 @@ defmodule Sectory.MixProject do
       {:esbuild, "~> 0.8", runtime: Mix.env() == :dev},
       {:telemetry_metrics, "~> 1.0"},
       {:telemetry_poller, "~> 1.0"},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.5"},
       {:inertia, "~> 0.7.0"},
       {:csv, "~> 3.2"},
-      {:briefly, "~> 0.5.0"}
+      {:briefly, "~> 0.5.0"},
     ]
   end
 

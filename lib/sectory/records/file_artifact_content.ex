@@ -2,6 +2,10 @@ defmodule Sectory.Records.FileArtifactContent do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @moduledoc """
+  Stores the physical data of a file artifact.
+  """
+
   schema "file_artifact_contents" do
     field :content, :binary
     belongs_to :file_artifact, Sectory.Records.FileArtifact

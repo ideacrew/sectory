@@ -2,6 +2,10 @@ defmodule Sectory.Records.Deliverable do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @moduledoc """
+  Represents a named deliverable with multiple versions.
+  """
+
   schema "deliverables" do
     field :name, :string
     has_many :deliverable_versions, Sectory.Records.DeliverableVersion

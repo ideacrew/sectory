@@ -1,6 +1,10 @@
 defmodule SectoryEtl.Import do
+  @moduledoc """
+  Import previous export packages produced by Sectory.
+  """
+
   def import_sbom_and_analysis_package(path) do
-    with {:ok, zip} = :zip.zip_open(to_charlist(path), [:memory]) do
+    with {:ok, zip} <- :zip.zip_open(to_charlist(path), [:memory]) do
       {:ok, {_, sbm_data}} = :zip.zip_get(to_charlist("sbom_manifest.csv"), zip)
       sbom_manifest = read_sbom_manifest(sbm_data)
       Enum.each(sbom_manifest, fn(m_entry) ->
@@ -39,6 +43,4 @@ defmodule SectoryEtl.Import do
       rec
     end)
   end
-
-  # SectoryEtl.Import.import_sbom_and_analysis_package("/Users/tevans/Downloads/export.zip")
 end
