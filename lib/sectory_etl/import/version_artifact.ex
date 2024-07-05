@@ -38,57 +38,48 @@ defmodule SectoryEtl.Import.VersionArtifact do
     deliverable_query =
       from d in Sectory.Records.Deliverable,
         where: d.name == ^deliverable_name
+
     deliverable_version_query =
-      case {git_sha, version} do
-        {nil, v} ->
-          from dv in Sectory.Records.DeliverableVersion,
-            join: d in assoc(dv, :deliverable),
-            where:
-              d.name == ^deliverable_name and
-                dv.version == ^v and
-                is_nil(dv.git_sha)
+      Sectory.Queries.DeliverableVersions.query_by_deliverable_name_version_and_sha(
+        deliverable_name,
+        version,
+        git_sha
+      )
 
-        {s, nil} ->
-          from dv in Sectory.Records.DeliverableVersion,
-            join: d in assoc(dv, :deliverable),
-            where:
-              d.name == ^deliverable_name and
-                dv.git_sha == ^s and
-                is_nil(dv.version)
-
-        _ ->
-          from dv in Sectory.Records.DeliverableVersion,
-            join: d in assoc(dv, :deliverable),
-            where:
-              d.name == ^deliverable_name and
-                dv.git_sha == ^git_sha and
-                dv.version == ^version
-      end
-
-      case Sectory.Repo.one(deliverable_version_query) do
-        nil -> case Sectory.Repo.one(deliverable_query) do
-          nil -> build_deliverable(deliverable_name)
+    case Sectory.Repo.one(deliverable_version_query) do
+      nil ->
+        case Sectory.Repo.one(deliverable_query) do
+          nil ->
+            build_deliverable(deliverable_name)
             |> build_deliverable_version(git_sha, version)
-          d -> build_deliverable_version(d, git_sha, version)
+
+          d ->
+            build_deliverable_version(d, git_sha, version)
         end
-        dvr -> dvr
-      end
+
+      dvr ->
+        dvr
+    end
   end
 
   defp build_deliverable(deliverable_name) do
-    cs = Sectory.Records.Deliverable.new(%{
-      name: deliverable_name
-    })
+    cs =
+      Sectory.Records.Deliverable.new(%{
+        name: deliverable_name
+      })
+
     {:ok, rec} = Sectory.Repo.insert(cs)
     rec
   end
 
   defp build_deliverable_version(deliverable, git_sha, version) do
-    cs = Sectory.Records.DeliverableVersion.new(%{
-      deliverable_id: deliverable.id,
-      git_sha: git_sha,
-      version: version
-    })
+    cs =
+      Sectory.Records.DeliverableVersion.new(%{
+        deliverable_id: deliverable.id,
+        git_sha: git_sha,
+        version: version
+      })
+
     {:ok, rec} = Sectory.Repo.insert(cs)
     rec
   end

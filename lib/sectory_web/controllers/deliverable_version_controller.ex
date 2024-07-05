@@ -1,17 +1,8 @@
 defmodule SectoryWeb.DeliverableVersionController do
   use SectoryWeb, :controller
-  import Ecto.Query
 
   def show(conn, %{"id" => dv_id}) do
-    record = Sectory.Repo.one!(
-      from dv in Sectory.Records.DeliverableVersion,
-      where: dv.id == ^dv_id,
-      left_join: vs in assoc(dv, :version_sboms),
-      join: d in assoc(dv, :deliverable),
-      left_join: va in assoc(dv, :version_artifacts),
-      left_join: fa in assoc(va, :file_artifact),
-      preload: [deliverable: d, version_sboms: vs, version_artifacts: {va, file_artifact: fa}]
-    )
+    record = Sectory.Queries.DeliverableVersions.deliverable_version_with_preloads(dv_id)
     conn
       |> render_inertia(
         "DeliverableVersions/ShowComponent",
