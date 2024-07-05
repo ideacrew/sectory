@@ -8,8 +8,9 @@ import * as dsc from "./pages/Deliverables/ShowComponent";
 import * as dvsc from "./pages/DeliverableVersions/ShowComponent";
 import * as dvnc from "./pages/DeliverableVersions/NewComponent";
 import * as vssc from "./pages/VersionSboms/ShowComponent";
-import * as vanc from "./pages/VulnerabilityAnalyses/NewComponent"
-import * as hic from "./pages/Home/IndexComponent"
+import * as vanc from "./pages/VulnerabilityAnalyses/NewComponent";
+import * as vaic from "./pages/VulnerabilityAnalyses/IndexComponent";
+import * as hic from "./pages/Home/IndexComponent";
 import axios from "axios";
 import "./pages.css";
 import Layout from "./pages/shared/Layout";
@@ -20,6 +21,7 @@ const pages = {
   'DeliverableVersions/NewComponent': dvnc,
   'DeliverableVersions/ShowComponent': dvsc,
   'VersionSboms/ShowComponent': vssc,
+  'VulnerabilityAnalyses/IndexComponent': vaic,
   'VulnerabilityAnalyses/NewComponent': vanc,
   'Home/IndexComponent': hic
 }

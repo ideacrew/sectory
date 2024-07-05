@@ -34,7 +34,7 @@ defmodule SectoryWeb.Router do
     scope "/version_artifacts" do
       get "/:id/download", VersionArtifactController, :download
     end
-    resources "/vulnerability_analyses", VulnerabilityAnalysisController, only: [:new, :create]
+    resources "/vulnerability_analyses", VulnerabilityAnalysisController, only: [:new, :create, :index]
   end
 
   # Other scopes may use custom stacks.

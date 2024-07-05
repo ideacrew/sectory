@@ -12,7 +12,8 @@ defmodule SectoryWeb.InertiaShare do
   defp build_main_nav_links() do
     %{
       homeUrl: ~p"/",
-      deliverablesUrl: ~p"/deliverables"
+      deliverablesUrl: ~p"/deliverables",
+      vulnerabilityAnalysesUrl: ~p"/vulnerability_analyses"
     }
   end
 end

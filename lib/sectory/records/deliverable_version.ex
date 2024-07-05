@@ -41,6 +41,6 @@ defmodule Sectory.Records.DeliverableVersion do
   end
 
   def cast_blanks(nil), do: nil
-  def cast_blanks(nil), do: nil
+  def cast_blanks(""), do: nil
   def cast_blanks(a), do: a
 end

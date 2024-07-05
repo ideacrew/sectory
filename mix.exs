@@ -52,7 +52,7 @@ defmodule Sectory.MixProject do
       {:bandit, "~> 1.5"},
       {:inertia, "~> 0.7.0"},
       {:csv, "~> 3.2"},
-      {:briefly, "~> 0.5.0"},
+      {:briefly, "~> 0.5.0"}
     ]
   end
 

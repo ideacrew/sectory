@@ -5,5 +5,6 @@ export default function NavLinks({mainNavLinks}) {
   return <ol>
         <li><Link href={mainNavLinks.homeUrl}>Home</Link></li>
         <li><Link href={mainNavLinks.deliverablesUrl}>Deliverables</Link></li>
+        <li><Link href={mainNavLinks.vulnerabilityAnalysesUrl}>Vulnerability Analyses</Link></li>
       </ol>
 }
