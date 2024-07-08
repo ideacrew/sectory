@@ -52,7 +52,8 @@ defmodule Sectory.MixProject do
       {:bandit, "~> 1.5"},
       {:inertia, "~> 0.7.0"},
       {:csv, "~> 3.2"},
-      {:briefly, "~> 0.5.0"}
+      {:briefly, "~> 0.5.0"},
+      {:tailwind, "~> 0.1", runtime: Mix.env() == :dev}
     ]
   end
 
@@ -71,6 +72,7 @@ defmodule Sectory.MixProject do
       "assets.setup": ["esbuild.install --if-missing"],
       "assets.build": ["esbuild sectory"],
       "assets.deploy": [
+        "tailwind default --minify",
         "esbuild sectory --minify",
         "phx.digest"
       ]

@@ -12,6 +12,7 @@ footer.footer {
 
 .footer-logo {
   display: inline;
+  margin-right: 1em;
 }
 
 .footer-nav ol {
@@ -22,6 +23,7 @@ footer.footer {
 
 .footer-nav li {
   margin-right: 2em;
+  vertical-align: middle;
 }
 
 .footer-nav a {

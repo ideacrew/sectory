@@ -23,7 +23,8 @@ config :sectory, SectoryWeb.Endpoint,
   debug_errors: true,
   secret_key_base: "EkI6h+oGD8dEWTt5hprOFADVgwZU1O2KusoQFhCQ9NCMKvLkvtj/eWK+5MpwMy6f",
   watchers: [
-    esbuild: {Esbuild, :install_and_run, [:sectory, ~w(--sourcemap=inline --watch)]}
+    esbuild: {Esbuild, :install_and_run, [:sectory, ~w(--sourcemap=inline --watch)]},
+    tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
   ]
 
 # ## SSL Support

@@ -18,7 +18,7 @@ export default function ShowComponent({ deliverable, new_deliverable_version_url
       <dd>{deliverable.name}</dd>
      </dl>
 
-     <h2>Versions</h2>
+     <h2 className='text-4xl font-extrabold'>Versions</h2>
 
      <Link href={new_deliverable_version_url}>New Version</Link>
 
