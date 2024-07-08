@@ -1,6 +1,6 @@
 #!/bin/bash
 
-GIT_SHA=`git rev-parse HEAD`
+# GIT_SHA=`git rev-parse HEAD`
 
 docker buildx build -f .docker/production/Dockerfile.alpine-inventory -t sectory-alpine-inventory:$GIT_SHA .
 docker sbom --output sectory-alpine-inventory.sbom --format cyclonedx-json sectory-alpine-inventory:$GIT_SHA 

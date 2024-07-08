@@ -1,0 +1,25 @@
+name: Test and Build Image
+on:
+  push:
+
+concurrency:
+  group: test-and-build-sectory-${{ github.ref }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: harmon758/postgresql-action@v1
+      - uses: actions/checkout@v3
+      - uses: erlef/setup-beam@v
+        with:
+          otp-version: 26
+          elixir-version: 1.17.1
+      - run: |
+          mix deps.get
+          mix test
+  build-image:
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
