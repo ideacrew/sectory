@@ -1,0 +1,7 @@
+items:
+  - type: npm
+    directory: ../../npm/
+  - type: custom_sbom
+    sbom_file: ../../sectory-alpine-inventory.sbom
+  - type: custom_sbom
+    sbom_file: ../../sectory-hex.sbom
