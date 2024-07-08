@@ -30,9 +30,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Install SBOM Tools
-        run: |
-          curl -sSfL https://raw.githubusercontent.com/docker/sbom-cli-plugin/main/install.sh | sh -s --
       - name: Build Release and SBOM
         env:
           GIT_SHA: ${{ github.sha }}

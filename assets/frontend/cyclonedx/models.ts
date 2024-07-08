@@ -138,6 +138,10 @@ export function getComponentKind(comp: Component) {
       return "Debian";
     } else if (purl.startsWith("pkg:apk/")) {
       return "Alpine";
+    } else if (purl.startsWith("pkg:alpine/")) {
+      return "Alpine";
+    } else if (purl.startsWith("pkg:hex/")) {
+      return "Hex";
     }
   }
   return "other";

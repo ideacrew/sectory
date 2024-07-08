@@ -42,7 +42,7 @@ COPY rel rel
 RUN mix release
 
 FROM alpine:3.19 as alpine-inventory
-
+RUN apk add --update bash openssl postgresql-client
 
 # prepare sbom image
 FROM --platform=amd64 ruby:3.3-bookworm AS sbomber
@@ -62,7 +62,7 @@ ENV COMMIT_SHA=$COMMIT_SHA
 
 RUN npm install --global @cyclonedx/cyclonedx-npm
 
-COPY sectory-alpine-inventory.sbom ./
+COPY --from=alpine-inventory /lib/apk/db/installed ./installed
 COPY --from=build /app/sectory-hex.sbom ./
 COPY --from=build /app/assets/package-lock.json /app/assets/package.json /app/assets/node_modules ./npm/
 COPY --from=build /app/assets/node_modules ./npm/node_modules
@@ -79,10 +79,7 @@ COPY sbom ./sbom
 RUN cd sbom_on_rails && bundle exec ruby /sbom_generation/sbom/manifest/sbom.rb
 
 # prepare release image
-FROM alpine:3.19 AS app
-
-# install runtime dependencies
-RUN apk add --update bash openssl postgresql-client
+FROM alpine-inventory AS app
 
 EXPOSE 4000
 ENV MIX_ENV=prod
