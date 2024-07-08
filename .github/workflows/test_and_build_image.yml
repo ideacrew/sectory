@@ -30,3 +30,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Build Release and SBOM
+        env:
+          GIT_SHA: ${{ env.GITHUB_SHA }}
+        run: |
+          ./.docker/production/build_release.sh
