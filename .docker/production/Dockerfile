@@ -71,6 +71,11 @@ RUN curl -OL https://github.com/CycloneDX/cyclonedx-cli/releases/download/v0.25.
     mv cyclonedx-linux-x64 /usr/local/bin/cyclonedx && \
     chmod u+x /usr/local/bin/cyclonedx
 
+RUN curl -OL https://github.com/google/osv-scanner/releases/download/v1.8.1/osv-scanner_linux_amd64 && \
+    mv osv-scanner_linux_amd64 /usr/local/bin/osv-scanner && \
+    chmod u+x,g+x,o+x /usr/local/bin/osv-scanner
+RUN curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
+
 RUN git clone https://github.com/ideacrew/sbom_on_rails.git
 RUN cd sbom_on_rails && bundle install
 

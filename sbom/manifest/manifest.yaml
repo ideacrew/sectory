@@ -5,3 +5,10 @@ items:
     directory: ../../npm/
   - type: custom_sbom
     sbom_file: ../../sectory-hex.sbom
+enrichers:
+  - type: grype
+  - type: osv_scanner
+  - type: nvd_db_update
+    nvd_db: ./nvd_db
+  - type: nvd_impact
+    nvd_db: ./nvd_db
