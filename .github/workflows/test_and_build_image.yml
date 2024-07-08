@@ -22,6 +22,7 @@ jobs:
           otp-version: 26
           elixir-version: 1.17.1
       - run: |
+          cp -f .github/workflows/test.exs ./config/test.exs
           mix deps.get
           mix test
   build-image:
