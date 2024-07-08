@@ -37,5 +37,12 @@ jobs:
         env:
           GIT_SHA: ${{ github.sha }}
         run: |
-          echo $GIT_SHA
           ./.docker/production/build_release.sh
+      - name: Compress SBOM
+        run: |
+          zip -er -P ${{ secrets.SBOM_PASSWORD }} sbom.zip sectory-alpine.sbom
+      - name: Upload SBOM
+        uses: actions/upload-artifact@v4
+        with:
+          name: SBOM
+          path: sbom.zip
