@@ -24,20 +24,9 @@ defmodule Sectory.Analysis.AnalyzedVersionSbom do
   end
 
   defp apply_analysis_to_sbom(sbom_version) do
-    version_id = sbom_version.deliverable_version_id
-    deliverable_id = sbom_version.deliverable_version.deliverable_id
     sbom_data = sbom_version.sbom_content.data
 
-    analyses_query =
-      from vas in Sectory.Records.VulnerabilityAnalysisScope,
-        join: va in assoc(vas, :vulnerability_analysis),
-        preload: :vulnerability_analysis,
-        where:
-          vas.deliverable_version_id == ^version_id or
-            (vas.deliverable_id == ^deliverable_id and is_nil(vas.deliverable_version_id)) or
-            (is_nil(vas.deliverable_id) and is_nil(vas.deliverable_version_id) and
-               vas.vulnerability_identifier in fragment("select distinct(cast(jsonb_array_elements(data->'vulnerabilities')->'id' as varchar(128))) from sbom_contents where version_sbom_id = ?", ^sbom_version.id))
-
+    analyses_query = Sectory.Queries.VulnerabilityAnalysisScopes.scopes_for_sbom_version(sbom_version)
     analyses = Sectory.Repo.all(analyses_query)
     merge_analyses(sbom_data, analyses)
   end
