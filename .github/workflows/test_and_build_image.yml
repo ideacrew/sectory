@@ -21,10 +21,14 @@ jobs:
         with:
           otp-version: 26
           elixir-version: 1.17.1
-      - run: |
-          cp -f .github/workflows/test.exs ./config/test.exs
+      - name: Get Deps
+        run: |
           mix deps.get
-          mix test
+      - run: |
+          cp -f .github/workflows/test.exs ./config/test.exs && mix test
+      - name: Style Check
+        run: |
+          mix credo --all
   build-image:
     needs: [test]
     runs-on: ubuntu-latest

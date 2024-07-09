@@ -93,28 +93,11 @@ defmodule SectoryEtl.Import.Sbom do
 
   defp create_deliverable_version(d_record, comp_version, git_sha) do
     find_query =
-      case {comp_version, git_sha} do
-        {nil, _} ->
-          from dv in Sectory.Records.DeliverableVersion,
-            where:
-              dv.deliverable_id == ^d_record.id and
-                is_nil(dv.version) and
-                dv.git_sha == ^git_sha
-
-        {_, nil} ->
-          from dv in Sectory.Records.DeliverableVersion,
-            where:
-              dv.deliverable_id == ^d_record.id and
-                dv.version == ^comp_version and
-                is_nil(dv.git_sha)
-
-        _ ->
-          from dv in Sectory.Records.DeliverableVersion,
-            where:
-              dv.deliverable_id == ^d_record.id and
-                dv.comp_version == ^comp_version and
-                dv.git_sha == ^git_sha
-      end
+      Sectory.Queries.DeliverableVersions.query_by_deliverable_version_and_sha(
+        d_record,
+        comp_version,
+        git_sha
+      )
 
     existing_record = Repo.one(find_query)
 

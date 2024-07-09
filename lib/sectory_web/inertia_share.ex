@@ -1,6 +1,10 @@
 defmodule SectoryWeb.InertiaShare do
   use SectoryWeb, :controller
 
+  @moduledoc """
+  Shared properties for Inertia Components.
+  """
+
   def init(default), do: default
 
   def call(conn, _) do

@@ -170,8 +170,7 @@ defmodule Mix.Tasks.Sbom do
   defp purl(type_namespace_name, version, qualifiers \\ []) do
     path =
       type_namespace_name
-      |> Enum.map(&URI.encode/1)
-      |> Enum.join("/")
+      |> Enum.map_join("/", &URI.encode/1)
 
     %URI{
       scheme: "pkg",
@@ -193,7 +192,6 @@ defmodule Mix.Tasks.Sbom do
       <<2::2, :crypto.strong_rand_bytes(2)::binary-size(14)-unit(1)>>,
       :crypto.strong_rand_bytes(6)
     ]
-    |> Enum.map(&Base.encode16(&1, case: :lower))
-    |> Enum.join("")
+    |> Enum.map_join("", &Base.encode16(&1, case: :lower))
   end
 end
