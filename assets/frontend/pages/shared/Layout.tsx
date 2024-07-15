@@ -7,11 +7,10 @@ import Flash from "./Flash";
 export default function Layout({children, mainNavLinks}) {
   const {flash} = usePage().props;
 
-  const hasFlash = flash && Object.keys(flash).length > 0;
+  // const hasFlash = flash && Object.keys(flash).length > 0;
   return <div className="pageContainer">
     <MainNav mainNavLinks={mainNavLinks}></MainNav>
     <main>
-      {hasFlash && <Flash flash={flash}/>}
       {children}
     </main>
     <Footer mainNavLinks={mainNavLinks}></Footer>

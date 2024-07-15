@@ -22,9 +22,8 @@ main {
 
 .main-nav {
   box-shadow: 0 0 9px 3px rgba(41,41,41,.25);
-  width: 100vw;
+  width: auto;
   display: flex;
-  flex-direction: row;
 }
 
 .main-nav img {
@@ -34,17 +33,27 @@ main {
 
 .main-nav ol {
   list-style: none;
-  display: flex;
-  flex-direction: row;
   padding-inline-start: 0px;
 }
 
 .main-nav ol li {
   padding-right: 1em;
+  display: inline-block;
 }
 
 .main-nav ol li a {
   text-decoration: none;
+}
+
+.main-nav ul {
+  list-style: none;
+  margin-left: auto;
+  padding-right: 1em;
+}
+
+.main-nav ul li {
+  display: inline-block;
+  padding-left: 1em;
 }
 
 .item-summary {
@@ -168,7 +177,7 @@ main {
   margin-block-end: 1.33em;
 }
 
-.pageContainer ul {
+.pageContainer main ul {
   display: block;
   list-style-type: disc;
   margin-block-start: 1em;

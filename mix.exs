@@ -32,6 +32,7 @@ defmodule Sectory.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:bcrypt_elixir, "~> 3.0"},
       {:phoenix, "~> 1.7.14"},
       {:phoenix_ecto, "~> 4.5"},
       {:ecto_sql, "~> 3.10"},
@@ -53,7 +54,9 @@ defmodule Sectory.MixProject do
       {:inertia, "~> 0.7.0"},
       {:csv, "~> 3.2"},
       {:briefly, "~> 0.5.0"},
-      {:tailwind, "~> 0.1", runtime: Mix.env() == :dev}
+      {:tailwind, "~> 0.1", runtime: Mix.env() == :dev},
+      {:swoosh, "~> 1.4"},
+      {:hackney, "~> 1.9"}
     ]
   end
 

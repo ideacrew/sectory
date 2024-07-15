@@ -27,7 +27,7 @@ config :esbuild,
   version: "0.17.11",
   sectory: [
     args:
-      ~w(js/app.js --bundle --target=es2019 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
+      ~w(js/app.js js/print_report.js --bundle --target=es2019 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
     cd: Path.expand("../assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
   ]
@@ -43,10 +43,6 @@ config :phoenix, :json_library, Jason
 config :inertia,
   endpoint: SectoryWeb.Endpoint
 
-# Import environment specific config. This must remain at the bottom
-# of this file so it overrides the configuration defined above.
-import_config "#{config_env()}.exs"
-
 config :tailwind, version: "3.4.4", default: [
   args: ~w(
     --config=tailwind.config.js
@@ -55,3 +51,9 @@ config :tailwind, version: "3.4.4", default: [
   ),
   cd: Path.expand("../assets", __DIR__)
 ]
+
+config :sectory, Sectory.Mailer, adapter: Swoosh.Adapters.Local
+
+# Import environment specific config. This must remain at the bottom
+# of this file so it overrides the configuration defined above.
+import_config "#{config_env()}.exs"

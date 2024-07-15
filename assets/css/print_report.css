@@ -1,0 +1,32 @@
+#report-title-page {
+  background-color: rgb(8, 8, 32);
+  color: white;
+  height: 275mm;
+  width: 100%;
+  text-align: center;
+}
+
+#report-title-page-content {
+  padding-top: 80mm;
+  vertical-align: middle;
+}
+
+#report-title-page-warning {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  bottom: 0px;
+}
+
+#report-toc {
+  page-break-after: always;
+}
+
+.major-section {
+  page-break-after: always;
+}
+
+body {
+  font-size: 12pt;
+}

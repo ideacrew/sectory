@@ -28,16 +28,18 @@ const pages = {
 
 axios.defaults.xsrfHeaderName = "x-csrf-token";
 
-createInertiaApp({
-  resolve: (name) => {
-    const thePage = pages[name];
-    thePage.default.layout = (page) => {
-      const layout = thePage.layout || Layout;
-      return <Layout children={page} mainNavLinks={page.props.mainNavLinks}></Layout>
-    }
-    return thePage;
-  },
-  setup({ App, el, props }) {
-    createRoot(el).render(<App {...props} />);
-  },
-});
+if (document.getElementById("app")) {
+  createInertiaApp({
+    resolve: (name) => {
+      const thePage = pages[name];
+      thePage.default.layout = (page) => {
+        const layout = thePage.layout || Layout;
+        return <Layout children={page} mainNavLinks={page.props.mainNavLinks}></Layout>
+      }
+      return thePage;
+    },
+    setup({ App, el, props }) {
+      createRoot(el).render(<App {...props} />);
+    },
+  });
+}
