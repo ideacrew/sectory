@@ -9,11 +9,7 @@ defmodule SectoryWeb.InertiaShare do
 
   def call(conn, _) do
     conn
-    |> assign_prop(
-      :mainNavLinks, build_main_nav_links()
-      )
     |> assign_current_user()
-
   end
 
   defp assign_current_user(conn) do
@@ -32,15 +28,5 @@ defmodule SectoryWeb.InertiaShare do
         nil
       )
     end
-  end
-
-  defp build_main_nav_links() do
-    %{
-      homeUrl: ~p"/",
-      deliverablesUrl: ~p"/deliverables",
-      vulnerabilityAnalysesUrl: ~p"/vulnerability_analyses",
-      settingsUrl: ~p"/users/settings",
-      logoutUrl: ~p"/users/log_out"
-    }
   end
 end

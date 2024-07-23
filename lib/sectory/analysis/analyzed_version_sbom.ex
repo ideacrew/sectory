@@ -8,7 +8,9 @@ defmodule Sectory.Analysis.AnalyzedVersionSbom do
 
   def find_analyzed_record(version_sbom_id) do
     record = find_record(version_sbom_id)
-    analysis = apply_analysis_to_sbom(record)
+    analyses_query = Sectory.Queries.VulnerabilityAnalysisScopes.scopes_for_sbom_version(record)
+    analyses = Sectory.Repo.all(analyses_query)
+    analysis = merge_analyses(record.sbom_content.data, analyses)
     {record, analysis}
   end
 
@@ -23,15 +25,7 @@ defmodule Sectory.Analysis.AnalyzedVersionSbom do
     )
   end
 
-  defp apply_analysis_to_sbom(sbom_version) do
-    sbom_data = sbom_version.sbom_content.data
-
-    analyses_query = Sectory.Queries.VulnerabilityAnalysisScopes.scopes_for_sbom_version(sbom_version)
-    analyses = Sectory.Repo.all(analyses_query)
-    merge_analyses(sbom_data, analyses)
-  end
-
-  defp merge_analyses(sbom_data, analyses) do
+  def merge_analyses(sbom_data, analyses) do
     vuln_map =
       Map.new(
         analyses,

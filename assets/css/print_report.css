@@ -27,6 +27,27 @@
   page-break-after: always;
 }
 
-body {
-  font-size: 12pt;
+html {
+  font-size: 11pt;
+  font-family: "Open Sans", sans-serif;
+}
+
+th {
+  font-weight: bold;
+}
+
+td {
+  padding: 0.5em;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 1.17em;
 }

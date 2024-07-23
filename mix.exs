@@ -56,7 +56,8 @@ defmodule Sectory.MixProject do
       {:briefly, "~> 0.5.0"},
       {:tailwind, "~> 0.1", runtime: Mix.env() == :dev},
       {:swoosh, "~> 1.4"},
-      {:hackney, "~> 1.9"}
+      {:hackney, "~> 1.9"},
+      {:lens, "~> 1.0.0"}
     ]
   end
 

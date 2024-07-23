@@ -42,4 +42,5 @@ liveSocket.connect()
 // >> liveSocket.disableLatencySim()
 // window.liveSocket = liveSocket
 
+import '../css/custom.css'
 import '../frontend/inertia'
