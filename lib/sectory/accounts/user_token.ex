@@ -1,4 +1,8 @@
 defmodule Sectory.Accounts.UserToken do
+  @moduledoc """
+  Represent a user's authentication token.
+  """
+
   use Ecto.Schema
   import Ecto.Query
   alias Sectory.Accounts.UserToken

@@ -1,4 +1,8 @@
 defmodule SectoryWeb.UserAuth do
+  @moduledoc """
+  Utilities for user authorization.
+  """
+
   use SectoryWeb, :verified_routes
 
   import Plug.Conn

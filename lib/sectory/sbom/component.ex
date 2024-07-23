@@ -1,4 +1,8 @@
 defmodule Sectory.Sbom.Component do
+  @moduledoc """
+  Extract data from an SBOM Component structure.
+  """
+
   require Lens.Macros
 
   def main_component_name(analysis) do

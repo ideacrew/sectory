@@ -1,4 +1,8 @@
 defmodule Sectory.Accounts.UserNotifier do
+  @moduledoc """
+  Notify users about changes to account status.
+  """
+
   import Swoosh.Email
 
   alias Sectory.Mailer

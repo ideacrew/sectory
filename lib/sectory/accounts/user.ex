@@ -1,4 +1,8 @@
 defmodule Sectory.Accounts.User do
+  @moduledoc """
+  Represents a user.
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
 

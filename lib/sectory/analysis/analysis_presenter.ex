@@ -1,4 +1,8 @@
 defmodule Sectory.Analysis.AnalysisPresenter do
+  @moduledoc """
+  Organize an analysis into an object I can report on.
+  """
+
   defstruct [
     :component_name,
     :component_version,
@@ -51,7 +55,7 @@ defmodule Sectory.Analysis.AnalysisPresenter do
     %{
       id: v["id"],
       severity: Sectory.Sbom.Vulnerability.format_severity(v),
-      potential: Sectory.Sbom.Vulnerability.is_potential(v)
+      potential: Sectory.Sbom.Vulnerability.potential?(v)
     }
   end
 
