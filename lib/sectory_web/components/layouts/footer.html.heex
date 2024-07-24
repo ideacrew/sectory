@@ -5,8 +5,10 @@
     <nav class="footer-nav">
       <ol class="py-1">
         <li class="py-2"><a href={~p"/"}>Home</a></li>
-        <li class="py-2"><a href={~p"/deliverables"}>Deliverables</a></li>
-        <li class="py-2"><a href={~p"/vulnerability_analyses"}>Vulnerability Analyses</a></li>
+        <%= if @current_user do %>
+          <li class="py-2"><a href={~p"/deliverables"}>Deliverables</a></li>
+          <li class="py-2"><a href={~p"/vulnerability_analyses"}>Vulnerability Analyses</a></li>
+        <% end %>
       </ol>
     </nav>
 </footer>

@@ -5,8 +5,10 @@
   <span class="link-section">
     <ol class="py-1">
       <li><a href={~p"/"}>Home</a></li>
-      <li><a href={~p"/deliverables"}>Deliverables</a></li>
-      <li><a href={~p"/vulnerability_analyses"}>Vulnerability Analyses</a></li>
+      <%= if @current_user do %>
+        <li><a href={~p"/deliverables"}>Deliverables</a></li>
+        <li><a href={~p"/vulnerability_analyses"}>Vulnerability Analyses</a></li>
+      <% end %>
     </ol>
     <%= user_header assigns %>
   </span>

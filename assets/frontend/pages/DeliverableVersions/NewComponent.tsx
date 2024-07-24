@@ -38,7 +38,7 @@ export default function NewComponent({ create_url, deliverable_id, deliverable_n
           <label htmlFor="git_sha">
             Git SHA
           </label>
-          <input type="git_sha" id="git_sha" name="git_sha" onChange={handleChange} value={values.git_sha}/>
+          <input type="text" id="git_sha" name="git_sha" onChange={handleChange} value={values.git_sha}/>
           {errors.git_sha && <div className="errors">{errors.git_sha}</div>}
           <input type='submit' value="Submit" className="btn btn-primary" />
         </div>

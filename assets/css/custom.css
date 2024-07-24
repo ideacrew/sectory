@@ -1,3 +1,24 @@
+html {
+  font-size: 12pt;
+  font-family: "Open Sans", sans-serif;
+}
+
+body {
+  margin: 0px;
+  background-color: hsl(208, 69%, 16%);
+  min-height: 100vh;
+}
+
+.mainContainer {
+  display: grid;
+  grid-template-rows: max-content minmax(50vh, auto) min-content;
+  min-height: 100vh;
+}
+
+main {
+  margin: 8px;
+}
+
 .main-nav {
   display: grid;
   grid-template-columns: max-content auto;
@@ -32,7 +53,6 @@
 }
 
 footer.footer {
-  margin-top: 3em;
   background-color: hsl(208, 69%, 16%);
   padding-top: 3em;
   padding-bottom: 3em;

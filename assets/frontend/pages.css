@@ -1,23 +1,5 @@
-html {
-  font-size: 12pt;
-  font-family: "Open Sans", sans-serif;
-}
-
-body {
-  margin: 0px;
-  background-color: hsl(208, 69%, 16%);
-}
-
-main {
-  margin: 8px;
-  min-height: 69vh;
-}
-
 .pageContainer {
-  display: grid;
-  grid-template-rows: min-content auto min-content;
-  grid-template-columns: 100%;
-  background-color: #fff;
+  background-color: hsl(0, 0%, 100%);
 }
 
 .item-summary {
@@ -48,6 +30,9 @@ main {
   width: max-content;
   text-align: right;
   margin-right: 0.5em;
+  vertical-align: middle;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .form-horizontal * {
