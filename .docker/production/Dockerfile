@@ -41,8 +41,8 @@ COPY config/runtime.exs config/
 COPY rel rel
 RUN mix release
 
-FROM alpine:3.19 as alpine-inventory
-RUN setup-apkrepos -cf && apk add --update bash openssl postgresql-client wkhtmltopdf
+FROM alpine-wkhtmltopdf:3.19.1-0.12.6-small as alpine-inventory
+RUN apk add --update bash openssl postgresql-client
 
 # prepare sbom image
 FROM --platform=amd64 ruby:3.3-bookworm AS sbomber
