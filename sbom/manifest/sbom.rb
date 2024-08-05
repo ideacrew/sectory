@@ -8,6 +8,7 @@ project_name = "sectory"
 component_def = SbomOnRails::Sbom::ComponentDefinition.new(
   project_name,
   sha,
+  nil,
   { github: "https://github.com/ideacrew/sectory" }
 )
 
