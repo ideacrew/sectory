@@ -4,6 +4,11 @@
 
 It allows you to upload sofware bills of materials (SBOMs) and other delivery artifacts, and track the vulnerabilties as well as the mitigations you attest against them - reporting this information in various formats.
 
+The following technologies are used:
+
+1. The front end primarily uses Inertia JS with React Components.  For the application 'shell' and user management it also makes use of Phoenix LiveView.
+2. The back end is Elixir Phoenix with a PostgresSQL JSON database.
+
 ## Running
 
 To start your Phoenix server:
