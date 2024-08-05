@@ -41,7 +41,7 @@ COPY config/runtime.exs config/
 COPY rel rel
 RUN mix release
 
-FROM alpine-wkhtmltopdf:3.19.1-0.12.6-small as alpine-inventory
+FROM surnet/alpine-wkhtmltopdf:3.19.1-0.12.6-small as alpine-inventory
 RUN apk add --update bash openssl postgresql-client
 
 # prepare sbom image
