@@ -67,7 +67,7 @@ defmodule SectoryWeb.Router do
     scope "/version_artifacts" do
       get "/:id/download", VersionArtifactController, :download
     end
-    resources "/vulnerability_analyses", VulnerabilityAnalysisController, only: [:new, :create, :index]
+    resources "/vulnerability_analyses", VulnerabilityAnalysisController, only: [:new, :create, :edit, :update, :index]
   end
 
   scope "/", SectoryWeb do

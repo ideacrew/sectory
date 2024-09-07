@@ -9,6 +9,7 @@ import * as dvsc from "./pages/DeliverableVersions/ShowComponent";
 import * as dvnc from "./pages/DeliverableVersions/NewComponent";
 import * as vssc from "./pages/VersionSboms/ShowComponent";
 import * as vanc from "./pages/VulnerabilityAnalyses/NewComponent";
+import * as vaec from "./pages/VulnerabilityAnalyses/EditComponent";
 import * as vaic from "./pages/VulnerabilityAnalyses/IndexComponent";
 import * as hic from "./pages/Home/IndexComponent";
 import axios from "axios";
@@ -23,6 +24,7 @@ const pages = {
   'VersionSboms/ShowComponent': vssc,
   'VulnerabilityAnalyses/IndexComponent': vaic,
   'VulnerabilityAnalyses/NewComponent': vanc,
+  'VulnerabilityAnalyses/EditComponent': vaec,
   'Home/IndexComponent': hic
 }
 
