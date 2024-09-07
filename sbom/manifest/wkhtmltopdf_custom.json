@@ -1,0 +1,36 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "metadata": {
+    "component": {
+      "type": "application",
+      "bom-ref": "sectory-SHA_PLACEHOLDER",
+      "name": "sectory",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "SHA_PLACEHOLDER"
+        }
+      ]
+    }
+  },
+  "components": [
+    {
+      "type": "application",
+      "bom-ref": "wkhtmltopdf-github-0.12.6",
+      "author": "wkhtmltopdf.org",
+      "name": "wkhtmltopdf",
+      "version": "0.12.6",
+      "description": "wkhtmltopdf",
+      "purl": "pkg:github/wkhtmltopdf/wkhtmltopdf@0.12.6?arch=source"
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "sectory-SHA_PLACEHOLDER",
+      "dependsOn": [
+        "wkhtmltopdf-github-0.12.6"
+      ]
+    }
+  ]
+}

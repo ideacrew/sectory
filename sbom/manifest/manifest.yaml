@@ -1,4 +1,6 @@
 items:
+  - type: custom_sbom
+    sbom_file: ./wkhtmltopdf_custom.json
   - type: apk_db
     db_path: ../../installed
   - type: npm
