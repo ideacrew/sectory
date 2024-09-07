@@ -54,7 +54,8 @@ defmodule SectoryWeb.DeliverableVersionController do
           id: vs.id,
           name: vs.name,
           version_sbom_url: ~p"/version_sboms/#{vs.id}",
-          analyzed_version_sbom_url: ~p"/version_sboms/#{vs.id}/analyzed"
+          analyzed_version_sbom_url: ~p"/version_sboms/#{vs.id}/analyzed",
+          vulnerability_report_download_url: ~p"/sbom_vulnerability_reports/#{vs.id}"
         }
       end),
       version_artifacts: Enum.map(record.version_artifacts, fn(va) ->

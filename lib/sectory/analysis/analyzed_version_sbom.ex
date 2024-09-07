@@ -87,8 +87,8 @@ defmodule Sectory.Analysis.AnalyzedVersionSbom do
       false ->
         Map.put(v, "properties", [
           %{
-            name: "vuln-assign:analysis_severity",
-            value: analysis_record.vulnerability_analysis.adjusted_severity
+            "name" => "vuln-assign:analysis_severity",
+            "value" => analysis_record.vulnerability_analysis.adjusted_severity
           }
         ])
 
@@ -107,8 +107,8 @@ defmodule Sectory.Analysis.AnalyzedVersionSbom do
 
       [
         %{
-          name: "vuln-assign:analysis_severity",
-          value: analysis_record.vulnerability_analysis.adjusted_severity
+          "name" => "vuln-assign:analysis_severity",
+          "value" => analysis_record.vulnerability_analysis.adjusted_severity
         }
         | clean_props
       ]
@@ -117,12 +117,12 @@ defmodule Sectory.Analysis.AnalyzedVersionSbom do
 
   defp scope_to_sbom_analysis(vas) do
     %{
-      state: vas.vulnerability_analysis.state,
-      justification: vas.vulnerability_analysis.justification,
-      response: vas.vulnerability_analysis.response,
-      detail: vas.vulnerability_analysis.detail,
-      firstIssued: vas.inserted_at,
-      lastUpdated: vas.updated_at
+      "state" => vas.vulnerability_analysis.state,
+      "justification" => vas.vulnerability_analysis.justification,
+      "response" => vas.vulnerability_analysis.response,
+      "detail" => vas.vulnerability_analysis.detail,
+      "firstIssued" => vas.inserted_at,
+      "lastUpdated" => vas.updated_at
     }
   end
 end
