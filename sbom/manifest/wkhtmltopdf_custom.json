@@ -22,7 +22,8 @@
       "name": "wkhtmltopdf",
       "version": "0.12.6",
       "description": "wkhtmltopdf",
-      "purl": "pkg:github/wkhtmltopdf/wkhtmltopdf@0.12.6?arch=source"
+      "purl": "pkg:github/wkhtmltopdf/wkhtmltopdf@0.12.6?arch=source",
+      "cpe": "cpe:2.3:a:wkhtmltopdf:wkhtmltopdf:0.12.6:*:*:*:*:*:*:*"
     }
   ],
   "dependencies": [
