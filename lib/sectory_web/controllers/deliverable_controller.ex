@@ -40,11 +40,13 @@ defmodule SectoryWeb.DeliverableController do
      %{
        id: d.id,
        name: d.name,
+       updated_at: d.updated_at,
        deliverable_versions: Enum.map(dvs, fn(dv) ->
          %{
           id: dv.id,
           git_sha: dv.git_sha,
           version: dv.version,
+          updated_at: dv.updated_at,
           deliverable_version_url: ~p"/deliverable_versions/#{dv.id}"
          }
        end)

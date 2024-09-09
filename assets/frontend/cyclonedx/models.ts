@@ -142,6 +142,12 @@ export function getComponentKind(comp: Component) {
       return "Alpine";
     } else if (purl.startsWith("pkg:hex/")) {
       return "Hex";
+    } else if (purl.startsWith("pkg:rpm/")) {
+      return "RPM";
+    } else if (purl.startsWith("pkg:maven/")) {
+      return "Maven";
+    } else if (purl.startsWith("pkg:github/")) {
+      return "Github";
     }
   }
   return "other";

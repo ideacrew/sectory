@@ -24,7 +24,8 @@ jobs:
       - name: Get Deps
         run: |
           mix deps.get
-      - run: |
+      - name: Run Tests
+        run: |
           cp -f .github/workflows/test.exs ./config/test.exs && mix test
       - name: Style Check
         run: |

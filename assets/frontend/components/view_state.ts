@@ -1,6 +1,7 @@
 export enum ViewSelection {
   COMPONENTS,
-  VULNERABLITIES
+  VULNERABLITIES,
+  COMPONENT_RISK
 }
 
 export type ViewState = {

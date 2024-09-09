@@ -5,6 +5,7 @@ import { ViewSelection } from "./view_state";
 import { VulnerabilitiesListComponent } from "./VulnerabilitiesList.component";
 import * as CycloneModel from "../cyclonedx/models";
 import React from "react";
+import { ComponentRiskListComponent } from "./ComponentRiskList.component";
 
 type PropsType = {
   dataLoader: CycloneDataLoader;
@@ -33,10 +34,13 @@ export class ViewSelectionComponent extends Component<PropsType, any, any> {
   render() : ReactNode {
       return <Fragment>
       <div className={this.sectionClass(ViewSelection.COMPONENTS)}>
-      <ComponentListComponent components={this.components()} />
+        <ComponentListComponent components={this.components()} />
       </div>
       <div className={this.sectionClass(ViewSelection.VULNERABLITIES)}>
-      <VulnerabilitiesListComponent dataLoader={this.props.dataLoader} deliverableVersion={this.props.deliverableVersion}/>
+        <VulnerabilitiesListComponent dataLoader={this.props.dataLoader} deliverableVersion={this.props.deliverableVersion}/>
+      </div>
+      <div className={this.sectionClass(ViewSelection.COMPONENT_RISK)}>
+        <ComponentRiskListComponent dataLoader={this.props.dataLoader} />
       </div>
       </Fragment>
   }

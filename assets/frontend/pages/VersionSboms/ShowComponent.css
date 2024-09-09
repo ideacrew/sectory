@@ -156,3 +156,19 @@ td {
 .component-filtered {
   display: none;
 }
+
+.risk-list-table {
+  border-collapse: collapse;
+}
+
+tr.risk-main-row {
+  border: 1px solid black;
+}
+
+.risk-main-row td {
+  border-collapse: collapse;
+}
+
+.risk-row-details-detail {
+  white-space: pre-wrap;
+}
