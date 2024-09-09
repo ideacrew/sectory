@@ -5,9 +5,11 @@ export default function ShowComponent({ deliverable_version }) {
   const deliverableSbomTags = deliverable_version.version_sboms.map((d) => {
     return <tr key={d.id}>
       <td><a href={d.version_sbom_url}>{d.name}</a></td>
-      <td>
-        <a href={d.analyzed_version_sbom_url}>Analyzed Version</a>
-        <a href={d.vulnerability_report_download_url}>Mitigation Report</a>
+      <td className="table-actions-list">
+        <ul>
+          <li><a href={d.analyzed_version_sbom_url}>Analyzed Version</a></li>
+          <li><a href={d.vulnerability_report_download_url}>Mitigation Report</a></li>
+        </ul>
       </td>
     </tr>
   });

@@ -136,3 +136,12 @@
   padding-inline-start: 40px;
   unicode-bidi: isolate;
 }
+
+td.table-actions-list ul {
+  margin: 0px;
+  padding-left: 0px;
+}
+
+td.table-actions-list ul li{
+  list-style: none;
+}
