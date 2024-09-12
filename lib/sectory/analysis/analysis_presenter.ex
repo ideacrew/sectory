@@ -43,7 +43,7 @@ defmodule Sectory.Analysis.AnalysisPresenter do
     %__MODULE__{
       component_name: Sectory.Sbom.Component.main_component_name(analysis),
       component_version: Sectory.Sbom.Component.main_component_version(analysis),
-      analysis_timestamp: analysis_timestamp(analysis),
+      analysis_timestamp: analysis_timestamp(sbom, analysis),
       analyses: analyses,
       totals: totals,
       all_issue_totals: all_issue_totals,
@@ -97,7 +97,7 @@ defmodule Sectory.Analysis.AnalysisPresenter do
     )
   end
 
-  defp analysis_timestamp(analysis) do
-    Date.utc_today()
+  defp analysis_timestamp(sbom, _analysis) do
+    sbom.updated_at
   end
 end
