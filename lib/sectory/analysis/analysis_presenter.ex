@@ -32,7 +32,7 @@ defmodule Sectory.Analysis.AnalysisPresenter do
 
     all_issue_totals =
       totals
-      |> Enum.group_by(fn {k, _v} -> elem(k, 0) end, fn {k, v} -> v end)
+      |> Enum.group_by(fn {k, _v} -> elem(k, 0) end, fn {_k, v} -> v end)
       |> Enum.into(%{}, fn {k, v} -> {k, Enum.sum(v)} end)
 
     mitigations = Enum.filter(vulns, fn(v) ->

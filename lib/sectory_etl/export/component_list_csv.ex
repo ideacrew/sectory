@@ -1,5 +1,9 @@
 defmodule SectoryEtl.Export.ComponentListCsv do
 
+  @moduledoc """
+  Export a list of SBOM components to a CSV file.
+  """
+
   @export_component_rows [
     name: "name",
     version: "version",
@@ -9,7 +13,7 @@ defmodule SectoryEtl.Export.ComponentListCsv do
     description: "description"
   ]
 
-  @spec export_component_list_csv(%Sectory.Records.VersionSbom{}) :: Enum.t()
+  @spec export_component_list_csv(Sectory.Records.VersionSbom.t()) :: Enum.t()
   def export_component_list_csv(v_sbom) do
     data = v_sbom.sbom_content.data
     data

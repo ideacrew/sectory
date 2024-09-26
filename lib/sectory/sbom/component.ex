@@ -53,20 +53,20 @@ defmodule Sectory.Sbom.Component do
   end
 
   defp select_component_kind(purl) do
-    with :no_match <- is_component_kind(purl, "pkg:gem/", "Gem"),
-         :no_match <- is_component_kind(purl, "pkg:npm/", "NPM"),
-         :no_match <- is_component_kind(purl, "pkg:deb/", "Debian"),
-         :no_match <- is_component_kind(purl, "pkg:apk/", "Alpine"),
-         :no_match <- is_component_kind(purl, "pkg:alpine/", "Alpine"),
-         :no_match <- is_component_kind(purl, "pkg:hex/", "Hex"),
-         :no_match <- is_component_kind(purl, "pkg:rpm/", "RPM"),
-         :no_match <- is_component_kind(purl, "pkg:maven/", "Maven"),
-         :no_match <- is_component_kind(purl, "pkg:github/", "Github") do
+    with :no_match <- component_kind_match?(purl, "pkg:gem/", "Gem"),
+         :no_match <- component_kind_match?(purl, "pkg:npm/", "NPM"),
+         :no_match <- component_kind_match?(purl, "pkg:deb/", "Debian"),
+         :no_match <- component_kind_match?(purl, "pkg:apk/", "Alpine"),
+         :no_match <- component_kind_match?(purl, "pkg:alpine/", "Alpine"),
+         :no_match <- component_kind_match?(purl, "pkg:hex/", "Hex"),
+         :no_match <- component_kind_match?(purl, "pkg:rpm/", "RPM"),
+         :no_match <- component_kind_match?(purl, "pkg:maven/", "Maven"),
+         :no_match <- component_kind_match?(purl, "pkg:github/", "Github") do
       "other"
     end
   end
 
-  defp is_component_kind(purl, test, value) do
+  defp component_kind_match?(purl, test, value) do
     case String.starts_with?(purl, test) do
       false -> :no_match
       _ -> value
