@@ -30,6 +30,20 @@ defmodule SectoryWeb.VersionSbomController do
     )
   end
 
+  def component_export(conn, %{"id" => vs_id}) do
+    record = Sectory.Repo.one!(
+      from vs in Sectory.Records.VersionSbom,
+      where: vs.id == ^vs_id,
+      join: sc in assoc(vs, :sbom_content),
+      preload: [:sbom_content]
+    )
+    conn
+    |> put_resp_content_type("text/csv")
+    |> put_resp_header("content-disposition", ~s[attachment; filename="#{vs_id}.csv"])
+    |> put_status(200)
+    |> resp(200, Enum.join(SectoryEtl.Export.export_component_list_csv(record), ""))
+  end
+
   defp encode_record(record, sbom_data) do
     %{
       id: record.id,

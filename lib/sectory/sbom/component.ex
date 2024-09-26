@@ -27,6 +27,52 @@ defmodule Sectory.Sbom.Component do
     |> Enum.at(0, "UNSPECIFIED")
   end
 
+  def component_purl(component) do
+    Lens.key?("purl")
+    |> Lens.either(Lens.const(nil))
+    |> Lens.one!(component)
+  end
+
+  def component_cpe(component) do
+    Lens.key?("cpe")
+    |> Lens.either(Lens.const(nil))
+    |> Lens.one!(component)
+  end
+
+  def component_description(component) do
+    Lens.key?("description")
+    |> Lens.either(Lens.const(nil))
+    |> Lens.one!(component)
+  end
+
+  def component_kind(component) do
+    case component_purl(component) do
+      nil -> "other"
+      a -> select_component_kind(a)
+    end
+  end
+
+  defp select_component_kind(purl) do
+    with :no_match <- is_component_kind(purl, "pkg:gem/", "Gem"),
+         :no_match <- is_component_kind(purl, "pkg:npm/", "NPM"),
+         :no_match <- is_component_kind(purl, "pkg:deb/", "Debian"),
+         :no_match <- is_component_kind(purl, "pkg:apk/", "Alpine"),
+         :no_match <- is_component_kind(purl, "pkg:alpine/", "Alpine"),
+         :no_match <- is_component_kind(purl, "pkg:hex/", "Hex"),
+         :no_match <- is_component_kind(purl, "pkg:rpm/", "RPM"),
+         :no_match <- is_component_kind(purl, "pkg:maven/", "Maven"),
+         :no_match <- is_component_kind(purl, "pkg:github/", "Github") do
+      "other"
+    end
+  end
+
+  defp is_component_kind(purl, test, value) do
+    case String.starts_with?(purl, test) do
+      false -> :no_match
+      _ -> value
+    end
+  end
+
   Lens.Macros.deflensp main_component_lens() do
     Lens.key?("metadata")
     |> Lens.key?("component")

@@ -8,6 +8,7 @@ export default function ShowComponent({ deliverable_version }) {
       <td className="table-actions-list">
         <ul>
           <li><a href={d.analyzed_version_sbom_url}>Analyzed Version</a></li>
+          <li><a href={d.export_component_csv_url}>Component List</a></li>
           <li><a href={d.vulnerability_report_download_url}>Mitigation Report</a></li>
         </ul>
       </td>

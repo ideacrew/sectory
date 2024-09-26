@@ -20,8 +20,6 @@ defmodule SectoryWeb.Router do
     plug :put_root_layout, html: {SectoryWeb.Layouts, :root}
     plug :put_secure_browser_headers
     plug :fetch_current_user
-    plug SectoryWeb.InertiaShare
-    plug Inertia.Plug
   end
 
   pipeline :inertia do
@@ -74,6 +72,14 @@ defmodule SectoryWeb.Router do
     pipe_through [:print_report, :require_authenticated_user]
 
     resources "/sbom_vulnerability_reports", SbomVulnerabilityReportController, only: [:show]
+  end
+
+  scope "/", SectoryWeb do
+    pipe_through [:browser, :require_authenticated_user]
+
+    scope "/version_sboms" do
+      get "/:id/component_export", VersionSbomController, :component_export
+    end
   end
 
   # Other scopes may use custom stacks.

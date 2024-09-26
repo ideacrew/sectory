@@ -31,6 +31,10 @@ defmodule SectoryEtl.Export do
     "artifact_file"
   ]
 
+  def export_component_list_csv(version_sbom) do
+    SectoryEtl.Export.ComponentListCsv.export_component_list_csv(version_sbom)
+  end
+
   def export_sbom_and_analysis_package() do
     analyses_csv = export_analysis_records()
 
