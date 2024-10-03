@@ -61,6 +61,7 @@ defmodule SectoryWeb.Router do
     get "/exports/sbom_and_analyses", ExportsController, :sbom_and_analyses, as: :sbom_and_analyses
     scope "/version_sboms" do
       get "/:id/analyzed", VersionSbomController, :analyzed
+      get "/:id/exportable", VersionSbomController, :exportable
     end
     scope "/version_artifacts" do
       get "/:id/download", VersionArtifactController, :download

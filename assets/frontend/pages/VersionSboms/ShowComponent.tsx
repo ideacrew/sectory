@@ -8,10 +8,10 @@ import React from 'react'
 import { CycloneDataLoader } from '../../components/cyclone_data_loader';
 import "./ShowComponent.css";
 
-export default function ShowComponent({ version_sbom }) {
+export default function ShowComponent({ version_sbom, disallow_analysis }) {
   let [selectedView, changeView] = useState(ViewSelection.COMPONENTS);
 
-  let dataLoader = new CycloneDataLoader(version_sbom.sbom_content.data);
+  let dataLoader = new CycloneDataLoader(version_sbom.sbom_content.data, disallow_analysis);
 
   return (
     <>

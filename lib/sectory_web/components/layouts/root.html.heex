@@ -19,9 +19,13 @@
   </head>
   <body>
     <div class="mainContainer bg-white">
-      <%= main_nav assigns %>
+      <%= unless assigns[:skip_main_layout] do %>
+        <%= main_nav assigns %>
+      <% end %>
       <%= @inner_content %>
-      <%= footer assigns %>
+      <%= unless assigns[:skip_main_layout] do %>
+        <%= footer assigns %>
+      <% end %>
     </div>
   </body>
 </html>

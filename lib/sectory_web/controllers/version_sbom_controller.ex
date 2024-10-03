@@ -30,6 +30,19 @@ defmodule SectoryWeb.VersionSbomController do
     )
   end
 
+  def exportable(conn, %{"id" => vs_id}) do
+    {record, analysis} = Sectory.Analysis.AnalyzedVersionSbom.find_analyzed_record(vs_id)
+    conn
+    |> assign(:skip_main_layout, true)
+    |> assign(:page_title, "Deliverable")
+    |> render_inertia(
+      "VersionSboms/ShowComponent",
+      Map.merge(%{
+        version_sbom: encode_record(record, analysis)
+      }, %{disallow_analysis: true})
+    )
+  end
+
   def component_export(conn, %{"id" => vs_id}) do
     record = Sectory.Repo.one!(
       from vs in Sectory.Records.VersionSbom,
